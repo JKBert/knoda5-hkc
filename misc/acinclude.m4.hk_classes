@@ -1,0 +1,180 @@
+##   -*- autoconf -*-
+
+dnl    This file is part of the hk_classes libraries/packages
+dnl    Copyright (C) 2001-2003 Horst Knorr (hk_classes@knoda.org)
+
+dnl    This file is free software; you can redistribute it and/or
+dnl    modify it under the terms of the GNU Library General Public
+dnl    License as published by the Free Software Foundation;
+dnl    version 2 of the License.
+
+dnl    This library is distributed in the hope that it will be useful,
+dnl    but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+dnl    Library General Public License for more details.
+
+dnl    You should have received a copy of the GNU Library General Public License
+dnl    along with this library; see the file COPYING.LIB.  If not, write to
+dnl    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+dnl    Boston, MA 02111-1307, USA.
+
+
+dnl  Usage
+dnl  =====
+dnl  Just add HK_CLASSESTEST to your configure.in file
+dnl  If you want to develop under KDE add HK_CLASSESTEST and HK_KDECLASSESTEST at the very end of your
+dnl  configure.in, just before the AC_OUTPUT entry.
+dnl  It is very important to that HK_KDECLASSESTEST stands after HK_CLASSESTEST
+dnl  and all KDE specific entries.
+
+
+
+AC_DEFUN([HK_CLASSESTEST],
+[
+   hkversion=0.8.0
+
+AC_LANG_SAVE
+AC_LANG_CPLUSPLUS
+
+
+
+AC_CHECK_LIB(dl,dlopen)
+AC_MSG_CHECKING([whether hk_classes >=$hkversion is available])
+
+ac_save_LIBS="$LIBS"
+ac_save_CPPFLAGS="$CPPFLAGS"
+ac_save_CXXLIBS="$CXXLIBS"
+
+
+
+if test "$with_hk_classes_dir" = ""; then
+   HK_CLASSESDIR=/usr/lib/hk_classes
+   HK_CLASSESINCDIR=/usr/include/hk_classes
+else
+   HK_CLASSESDIR=$with_hk_classes_dir
+   HK_CLASSESINCDIR=$HK_CLASSESDIR/include
+
+fi
+
+
+if test "$with_hk_classes_incdir" != ""; then
+
+HK_CLASSESINCDIR=$with_hk_classes_incdir
+
+fi
+
+
+
+
+CXXLIBS=" -L${HK_CLASSESDIR} -lhk_classes"
+LIBS="$ac_save_LIBS -L${HK_CLASSESDIR} -lhk_classes "
+CPPFLAGS="-I$HK_CLASSESINCDIR $ac_save_CPPFLAGS "
+
+AC_TRY_LINK([#include <hk_referentialintegrity.h>],[ hk_referentialintegrity* c;
+;
+],[hk_lib=yes],[hk_lib=no])
+
+AC_MSG_RESULT($hk_lib)
+if test $hk_lib = no ; then
+  AC_MSG_ERROR(
+  hk_classes >=version $hkversion is NOT available !!
+
+  ============================================================================
+
+  If you have installed the library in another directory than
+  /usr/lib/hk_classes
+  and the header files in : /usr/include/hk_classes
+  use the configure paramaters:
+
+  --with-hk_classes-dir=PATH      Path to the hk_classes directory
+  --with-hk_classes-incdir=PATH   Path to the hk_classes header files
+
+  You can get a copy at http://hk-classes.sourceforge.net
+
+  ============================================================================
+
+  )
+fi
+AC_SSTREAM_EXISTS
+AC_IOSTREAM_EXISTS
+
+  AC_SUBST(HK_CLASSESDIR)
+  AC_SUBST(HK_CLASSESINCDIR)
+  AC_LANG_RESTORE
+
+])
+
+
+AC_DEFUN([HK_KDECLASSESTEST],
+[
+AC_REQUIRE([HK_CLASSESTEST])
+
+AC_LANG_SAVE
+AC_LANG_CPLUSPLUS
+
+dnl AC_PREFIX_DEFAULT(${HK_CLASSESDIR:-/usr/local/hk_classes})
+AC_CHECK_LIB(dl,dlopen)
+AC_MSG_CHECKING([whether hk_kdeclasses is available])
+
+ac_save_LIBS="$LIBS"
+ac_save_CPPFLAGS="$CPPFLAGS"
+ac_save_CXXLIBS="$CXXLIBS"
+HK_CLASSESDIR=${HK_CLASSESDIR:-/usr/local/hk_classes}
+HK_CLASSESINCDIR=$HK_CLASSESDIR/include
+
+CXXLIBS="$ac_save_CXXLIBS -L${HK_CLASSESDIR} -L${KDEDIR}/lib -L${QTDIR}/lib -lhk_classes -lhk_kdeclasses -lqt -lkdecore -lkdeui"
+LIBS="$ac_save_LIBS -L${HK_CLASSESDIR} -L${KDEDIR}/lib -L${QTDIR}/lib -lhk_classes -lqt -lhk_kdeclasses -lkdecore -lkdeui"
+CPPFLAGS="$ac_save_CPPFLAGS -I$HK_CLASSESINCDIR -I$QTDIR/include -I$KDEDIR/include"
+
+AC_TRY_LINK([
+#include <hk_classes.h>
+#include <hk_kdelineedit.h>
+],[  hk_drivermanager p_class;hk_kdelineedit* l=new hk_kdelineedit(NULL);],[hk_lib=yes],[hk_lib=no])
+
+AC_MSG_RESULT($hk_lib)
+if test $hk_lib = no ; then
+  AC_MSG_ERROR(
+
+
+  Sorry
+  ============================================================================
+  hk_kdeclasses are NOT available !!
+  You can get a copy at http://www.knoda.org
+  ============================================================================
+
+  )
+fi
+
+  AC_LANG_RESTORE
+
+])
+
+
+
+AC_DEFUN([AC_SSTREAM_EXISTS],
+[
+AC_REQUIRE([AC_LANG_CPLUSPLUS])
+AC_REQUIRE([AC_PROG_CXX])
+
+AC_MSG_CHECKING([whether <sstream> exists])
+AC_TRY_LINK([#include <sstream>],[;],[sstream_exists=yes],[sstream_exists=no])
+AC_MSG_RESULT($sstream_exists)
+if test $sstream_exists = yes ; then
+AC_DEFINE(HAVE_SSTREAM,1,Defines if stdc++ library contains a sstream implementation)
+fi
+
+])
+
+AC_DEFUN([AC_IOSTREAM_EXISTS],
+[
+
+AC_MSG_CHECKING([whether <iostream> exists])
+AC_TRY_LINK([#include <iostream>],[;],[iostream_exists=yes],[iostream_exists=no])
+AC_MSG_RESULT($iostream_exists)
+if test $iostream_exists = yes ; then
+AC_DEFINE(HAVE_IOSTREAM,1,Defines if stdc++ library contains a iostream implementation)
+fi
+
+])
+
+

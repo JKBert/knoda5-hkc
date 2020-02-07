@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Use a query</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The hk_classes programmer's tutorial"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Searching a column"
+HREF="chapter8.html"><META
+HTTP-EQUIV="Content-Style-Type"
+CONTENT="text/css"><LINK
+REL="stylesheet"
+HREF="common/kde-common.css"
+TYPE="text/css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=iso-8859-1"><META
+HTTP-EQUIV="Content-Language"
+CONTENT="en"><LINK
+REL="stylesheet"
+HREF="common/kde-localised.css"
+TYPE="text/css"
+TITLE="KDE-English"><LINK
+REL="stylesheet"
+HREF="common/kde-default.css"
+TYPE="text/css"
+TITLE="KDE-Default"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#AA0000"
+VLINK="#AA0055"
+ALINK="#AA0000"
+STYLE="font-family: sans-serif;"
+><DIV
+CLASS="logoheader"
+><A
+HREF="http://www.kde.org/"
+></A
+></DIV
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The hk_classes programmer's tutorial</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="chapter8.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+>&nbsp;</TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="CHAPTER9"
+></A
+>Chapter 9. Use a query</H1
+><P
+>A result query works like a table. Note: the SQL statement has no delimiter at the end, even if the used database needs
+one.
+<DIV
+CLASS="EXAMPLE"
+><HR><A
+NAME="AEN129"
+></A
+><P
+><B
+>Example 9-1. Use a query</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>   1&nbsp;
+   2&nbsp;  #include &#60;hk_classes.h&#62;
+   3&nbsp;  #include &#60;iostream&#62;
+   4&nbsp;  int main()
+   5&nbsp;  {
+   6&nbsp;  hk_drivermanager* mydrivermanager = new hk_drivermanager();
+   7&nbsp;  if (mydrivermanager==NULL) {cout &#60;&#60;"error creating mydrivermanager"&#60;&#60;endl;exit(1);}
+   8&nbsp;  hk_connection* myconnection = mydrivermanager-&#62;new_connection();
+   9&nbsp;  if (myconnection==NULL) {cout &#60;&#60;"error creating myconnection"&#60;&#60;endl;exit(1);}
+  10&nbsp;  myconnection-&#62;connect();
+  11&nbsp;
+  12&nbsp;  hk_database* mydatabase=myconnection-&#62;new_database("exampledb");
+  13&nbsp;  if (mydatabase==NULL) {cout &#60;&#60;"error creating mydatabase"&#60;&#60;endl;exit(1);}
+  14&nbsp;  <FONT
+COLOR="RED"
+>hk_datasource* mydatasource= mydatabase-&#62;new_resultquery();</FONT
+>
+  15&nbsp;  <FONT
+COLOR="RED"
+>mydatasource-&#62;set_sql("SELECT * FROM literature");</FONT
+>
+  16&nbsp;  if (mydatasource==NULL) {cout &#60;&#60;"error creating mydatasource"&#60;&#60;endl;exit(1);}
+  17&nbsp;  mydatasource-&#62;enable();
+  18&nbsp;  //the following internal debugging command should not be used. It is used here for
+  19&nbsp;  //demonstration purposes only!!!!
+  20&nbsp;  mydatasource-&#62;dump_data(); // DON'T USE THIS COMMAND IN YOUR PROGRAMMS!!!
+  21&nbsp;
+  22&nbsp;  delete mydrivermanager;
+  23&nbsp;  }</PRE
+></TD
+></TR
+></TABLE
+><HR></DIV
+></P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="chapter8.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Searching a column</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,491 @@
+
+*****************************************
+*                                       *
+*       hk_classes                      *
+*       INSTALL                         *
+*                                       *
+*****************************************
+
+=========
+CONTENTS
+=========
+0. PROLOG
+1. SOFTWARE REQUIREMENTS
+2. HK_CLASSES CONFIGURATION OPTIONS
+3. CONFIGURATION
+4. DATABASE SPECIFIC INFORMATION
+4.1 LOCAL DATABASE FILE FORMAT DRIVERS
+4.1.1 mdb/MS Access
+4.1.2 sqlite, sqlite3 / SQLite
+4.1.3 xbase / DBASE
+4.1.4 paradox / Corel Paradox
+4.2 SQL SERVER DRIVERS
+4.2.1 MYSQL
+4.2.2 POSTGRES
+4.2.3 ODBC
+5. BUILDING THE LIBRARY
+6. Basic Installation
+
+=========
+0. PROLOG
+=========
+
+The HK_CLASSES library is prepared to work with the configure script.
+Read "Basic Installation" for details.
+
+HK_CLASSES includes drivers for
+* MS Access,
+* Mysql,
+* Corel Paradox,
+* Postgres (version 7.1 or higher),
+* SQLite,
+* XBASE/DBASE and
+* ODBC (compiles with both UnixODBC http://www.unixodbc.org and iodbc).
+
+If you don't want to use a SQL server, because it is overkill for your
+machine, a local database format is the best choice. In this case take
+SQLite version 3.x.
+
+You'll have to install your distribution's development package for your
+database before compiling hk_classes. E.g. for Mysql it is called
+mysql-devel (the exact name is distribution specific)
+
+The library will be installed in /usr/lib/hk_classes and header files
+in /usr/include/hk_classes per default.
+
+
+
+Horst Knorr <hk_classes@knoda.org>
+
+
+
+
+========================
+1. SOFTWARE REQUIREMENTS
+========================
+
+* At least one SQL server (Mysql or Postgres), one local database system
+  (SQLite,XBase) or a ODBC library   with headerfiles (a package
+  named something like *devel*, the exact name is distribution specific)
+* a c++-compiler
+* Python (http://www.python.org) with its header files (a package
+  named something like *python-devel*,  the exact name is
+  distribution specific)
+* fontconfig (http://www.fontconfig.org) and 
+  freetype 2 (http://www.freetype.org) 
+  Both programs are part of all distributions I know of. If you have any 
+  problem try to install the fontconfig-devel.rpm and the freetype2-devel.rpm
+  The exact name of these rpms is distribution specific.
+* the 'magic' library (libmagic*) with its header files.
+
+
+===================================
+2. HK_CLASSES CONFIGURATION OPTIONS
+===================================
+
+Usage: configure [options] [host]
+Options: [defaults in brackets after descriptions]
+
+Configuration:
+  -h, --help              display this help and exit
+      --help=short        display options specific to this package
+      --help=recursive    display the short help of all the included packages
+  -V, --version           display version information and exit
+  -q, --quiet, --silent   do not print `checking...' messages
+      --cache-file=FILE   cache test results in FILE [disabled]
+  -C, --config-cache      alias for `--cache-file=config.cache'
+  -n, --no-create         do not create output files
+      --srcdir=DIR        find the sources in DIR [configure dir or `..']
+
+
+Installation directories:
+  --prefix=PREFIX         install architecture-independent files in PREFIX
+                          [/usr/local/hk_classes]
+  --exec-prefix=EPREFIX   install architecture-dependent files in EPREFIX
+                          [PREFIX]
+
+By default, `make install' will install all the files in
+`/usr/local/hk_classes/bin', `/usr/local/hk_classes/lib' etc.  You can specify
+an installation prefix other than `/usr/local/hk_classes' using `--prefix',
+for instance `--prefix=$HOME'.
+
+For better control, use the options below.
+
+Fine tuning of the installation directories:
+  --bindir=DIR           user executables [EPREFIX/bin]
+  --sbindir=DIR          system admin executables [EPREFIX/sbin]
+  --libexecdir=DIR       program executables [EPREFIX/libexec]
+  --datadir=DIR          read-only architecture-independent data [PREFIX/share]
+  --sysconfdir=DIR       read-only single-machine data [PREFIX/etc]
+  --sharedstatedir=DIR   modifiable architecture-independent data [PREFIX/com]
+  --localstatedir=DIR    modifiable single-machine data [PREFIX/var]
+  --libdir=DIR           object code libraries [EPREFIX/lib]
+  --includedir=DIR       C header files [PREFIX/include]
+  --oldincludedir=DIR    C header files for non-gcc [/usr/include]
+  --infodir=DIR          info documentation [PREFIX/info]
+  --mandir=DIR           man documentation [PREFIX/man]
+
+
+Program names:
+  --program-prefix=PREFIX            prepend PREFIX to installed program names
+  --program-suffix=SUFFIX            append SUFFIX to installed program names
+  --program-transform-name=PROGRAM   run sed PROGRAM on installed program names
+
+System types:
+  --build=BUILD     configure for building on BUILD [guessed]
+  --host=HOST       build programs to run on HOST [BUILD]
+
+Optional Features:
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-static=PKGS  build static libraries default=no
+  --enable-shared=PKGS  build shared libraries default=yes
+  --enable-fast-install=PKGS  optimize for fast installation default=yes
+  --disable-libtool-lock  avoid locking (might break parallel builds)
+
+Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-mysql-dir=PATH   Path to the Mysql directory
+  --with-mysql-incdir=PATH   Path to the Mysql header files
+  --with-mysql-libdir=PATH   Path to the Mysql library
+  --with-hk_classes-incdir=PATH   Path for the hk_classes header files
+  --with-postgres-dir=PATH   Path to the postgres directory
+  --with-postgres-incdir=PATH   Path to the postgres header files
+  --with-postgres-libdir=PATH   Path to the postgres library
+  --with-odbc-dir=PATH   Path to the odbc directory
+  --with-odbc-incdir=PATH   Path to the odbc header files
+  --with-odbc-libdir=PATH   Path to the odbc library
+  --with-gnu-ld           assume the C compiler uses GNU ld default=no
+  --with-pic              try to use only PIC/non-PIC objects default=use both
+  --with-pythondir=pythondir   use python installed in pythondir
+
+
+Some influential environment variables:
+  CC          C compiler command
+  CFLAGS      C compiler flags
+  LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
+              nonstandard directory <lib dir>
+  CPPFLAGS    C/C++ preprocessor flags, e.g. -I<include dir> if you have
+              headers in a nonstandard directory <include dir>
+  CPP         C preprocessor
+  CXX         C++ compiler command
+  CXXFLAGS    C++ compiler flags
+
+================
+3. CONFIGURATION
+================
+
+# ./configure [options]
+
+For different Firebird directories on your machine, use the following options:
+  --with-firebird-dir=PATH   Path to the Firebird directory
+  --with-firebird-incdir=PATH   Path to the Firebird header files
+  --with-firebird-libdir=PATH   Path to the Firebird library
+
+For different Mysql directories on your machine, use the following options:
+  --with-mysql-dir=PATH   Path to the Mysql directory
+  --with-mysql-incdir=PATH   Path to the Mysql header files
+  --with-mysql-libdir=PATH   Path to the Mysql library
+  --without-mysql          disable mysql plugins
+
+For different Postgres directories on your machine, use the following options:
+  --with-postgres-dir=PATH   Path to the postgres directory
+  --with-postgres-incdir=PATH   Path to the postgres header files
+  --with-postgres-libdir=PATH   Path to the postgres library
+  --without-postgres          disable postgres plugins
+
+For different ODBC directories on your machine, use the following options:
+  --with-odbc-dir=PATH   Path to the odbc directory
+  --with-odbc-incdir=PATH   Path to the odbc header files
+  --with-odbc-libdir=PATH   Path to the odbc library
+  --without-odbc          disable odbc plugins
+
+For different SQLite version 2.x directories on your machine, use the following options:
+   --without-sqlite        disable sqlite2 plugins
+  --with-sqlite-dir=PATH   Path to the sqlite2 directory
+  --with-sqlite-incdir=PATH   Path to the sqlite2 header files
+  --with-sqlite-libdir=PATH   Path to the sqlite2 library
+
+For different SQLite version 3.x directories on your machine, use the following options:
+  --without-sqlite3       disable sqlite3 plugins
+
+For different mdbtools directories on your machine, use the following options:
+  --without-mdb           disable mdb (M$Access) plugins
+
+For different xbase directories on your machine, use the following options:
+  --without-xbase         disable xbase plugins
+  --with-xbase-dir=PATH   Path to the xbasetools directory
+  --with-xbase-incdir=PATH   Path to the xbase header files
+  --with-xbase-libdir=PATH   Path to the xbase library
+
+For different pxlib directories on your machine, use the following options:
+  --without-paradox       disable paradox plugins
+  --with-paradox-dir=PATH   Path to the pxlibs directory
+  --with-paradox-incdir=PATH   Path to the paradox header files
+  --with-paradox-libdir=PATH   Path to the paradox library
+
+
+
+================================
+4. DATABASE SPECIFIC INFORMATION
+================================
+
+
+
+4.1 LOCAL DATABASE FILE FORMAT DRIVERS
+======================================
+
+4.1.1 mdb/MS Access
+*******************
+The MDB  driver is base on MDBTOOLS (http://mdbtools.sourceforge.net) to read  *.mdb files. Due to
+restrictions of mdbtools the driver is read only. That means you can only read
+data of existing mdb files. You can neither write data nor create new databases or tables.
+
+4.1.2 sqlite, sqlite3 / SQLite
+******************************
+SQLite (http://www.sqlite.org) supports 2 (incompatible) file formats.
+Both are supported by hk_classes. You need either version 2.x or version 3.x of
+SQLite. Due to restrictions of SQLite the schema of existing tables can't be 
+modified. From SQLite version 3.2 on it is supported to add columns. 
+The sqlite3 driver will be installed per default
+
+4.1.3 xbase / DBASE
+*******************
+You need the XBASE library (http://linux.techass.com/projects/xdb/) and the
+XBSQL library
+(http://sourceforge.net/project/showfiles.php?group_id=23940&package_id=150739).
+Install XBASE first and then XBSQL. XBSQL is needed to add SQL support for
+XBASE.
+
+The xbase driver supports reading and writing of DBase compatible files
+(creating indices is not supported)
+
+4.1.4 paradox / Corel Paradox
+*****************************
+You need the PXLIB library (http://pxlib.sourceforge.net). The driver does not
+support SQL. It is strongly recommended to use this driver only for
+import. The driver is read only. 
+Experimental write support for pxlib-0.6.0 has been added.
+
+
+4.2 SQL SERVER DRIVERS
+======================
+
+4.2.1 FIREBIRD
+**************
+You need Firebird (http://www.firebirdsql.org) to be installed.
+
+
+4.2.2 MYSQL
+***********
+You need Mysql (http://www.mysql.com) to be installed.
+
+4.2.3 POSTGRES
+**************
+You need Postgres (http://www.postgresql.org) to be installed.
+
+4.2.4 ODBC
+**********
+You need unixODBC (http://www.unixodbc.org) to be installed.
+The driver can't create new (ODBC) datasources. You will have to modify your ODBC.ini file manually.
+ODBC allows you to use e.g. MaxDB/SAPDB or MS SQL Server (http://www.freetds.org)
+
+
+
+=======================
+5. BUILDING THE LIBRARY
+=======================
+
+After starting ./configure as described in section 3, call
+# make
+# su
+# make install
+
+
+
+=====================
+6. Basic Installation
+=====================
+
+ These are generic installation instructions.
+
+ The `configure' shell script attempts to guess correct values for
+various system-dependent variables used during compilation. It uses
+those values to create a `Makefile' in each directory of the package.
+It may also create one or more `.h' files containing system-dependent
+definitions. Finally, it creates a shell script `config.status' that
+you can run in the future to recreate the current configuration, a file
+`config.cache' that saves the results of its tests to speed up
+reconfiguring, and a file `config.log' containing compiler output
+(useful mainly for debugging `configure').
+
+ If you need to do unusual things to compile the package, please try
+to figure out how `configure' could check whether to do them, and mail
+diffs or instructions to the address given in the `README' so they can
+be considered for the next release. If at some point `config.cache'
+contains results you don't want to keep, you may remove or edit it.
+
+ The file `configure.in' is used to create `configure' by a program
+called `autoconf'. You only need `configure.in' if you want to change
+it or regenerate `configure' using a newer version of `autoconf'.
+
+The simplest way to compile this package is:
+
+ 1. `cd' to the directory containing the package's source code and type
+  `./configure' to configure the package for your system. If you're
+  using `csh' on an old version of System V, you might need to type
+  `sh ./configure' instead to prevent `csh' from trying to execute
+  `configure' itself.
+
+  Running `configure' takes awhile. While running, it prints some
+  messages telling which features it is checking for.
+
+ 2. Type `make' to compile the package.
+
+ 3. Optionally, type `make check' to run any self-tests that come with
+  the package.
+
+ 4. Type `make install' to install the programs and any data files and
+  documentation.
+
+ 5. You can remove the program binaries and object files from the
+  source code directory by typing `make clean'. To also remove the
+  files that `configure' created (so you can compile the package for
+  a different kind of computer), type `make distclean'. There is
+  also a `make maintainer-clean' target, but that is intended mainly
+  for the package's developers. If you use it, you may have to get
+  all sorts of other programs in order to regenerate files that came
+  with the distribution.
+
+Compilers and Options
+=====================
+
+ Some systems require unusual options for compilation or linking that
+the `configure' script does not know about. You can give `configure'
+initial values for variables by setting them in the environment. Using
+a Bourne-compatible shell, you can do that on the command line like
+this:
+  CC=c89 CFLAGS=-O2 LIBS=-lposix ./configure
+
+Or on systems that have the `env' program, you can do it like this:
+  env CPPFLAGS=-I/usr/local/include LDFLAGS=-s ./configure
+
+Compiling For Multiple Architectures
+====================================
+
+ You can compile the package for more than one kind of computer at the
+same time, by placing the object files for each architecture in their
+own directory. To do this, you must use a version of `make' that
+supports the `VPATH' variable, such as GNU `make'. `cd' to the
+directory where you want the object files and executables to go and run
+the `configure' script. `configure' automatically checks for the
+source code in the directory that `configure' is in and in `..'.
+
+ If you have to use a `make' that does not supports the `VPATH'
+variable, you have to compile the package for one architecture at a time
+in the source code directory. After you have installed the package for
+one architecture, use `make distclean' before reconfiguring for another
+architecture.
+
+Installation Names
+==================
+
+ By default, `make install' will install the package's files in
+`/usr/local/bin', `/usr/local/man', etc. You can specify an
+installation prefix other than `/usr/local' by giving `configure' the
+option `--prefix=PATH'.
+
+ You can specify separate installation prefixes for
+architecture-specific files and architecture-independent files. If you
+give `configure' the option `--exec-prefix=PATH', the package will use
+PATH as the prefix for installing programs and libraries.
+Documentation and other data files will still use the regular prefix.
+
+ In addition, if you use an unusual directory layout you can give
+options like `--bindir=PATH' to specify different values for particular
+kinds of files. Run `configure --help' for a list of the directories
+you can set and what kinds of files go in them.
+
+ If the package supports it, you can cause programs to be installed
+with an extra prefix or suffix on their names by giving `configure' the
+option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
+
+Optional Features
+=================
+
+ Some packages pay attention to `--enable-FEATURE' options to
+`configure', where FEATURE indicates an optional part of the package.
+They may also pay attention to `--with-PACKAGE' options, where PACKAGE
+is something like `gnu-as' or `x' (for the X Window System). The
+`README' should mention any `--enable-' and `--with-' options that the
+package recognizes.
+
+ For packages that use the X Window System, `configure' can usually
+find the X include and library files automatically, but if it doesn't,
+you can use the `configure' options `--x-includes=DIR' and
+`--x-libraries=DIR' to specify their locations.
+
+Specifying the System Type
+==========================
+
+ There may be some features `configure' can not figure out
+automatically, but needs to determine by the type of host the package
+will run on. Usually `configure' can figure that out, but if it prints
+a message saying it can not guess the host type, give it the
+`--host=TYPE' option. TYPE can either be a short name for the system
+type, such as `sun4', or a canonical name with three fields:
+  CPU-COMPANY-SYSTEM
+
+See the file `config.sub' for the possible values of each field. If
+`config.sub' isn't included in this package, then this package doesn't
+need to know the host type.
+
+ If you are building compiler tools for cross-compiling, you can also
+use the `--target=TYPE' option to select the type of system they will
+produce code for and the `--build=TYPE' option to select the type of
+system on which you are compiling the package.
+
+Sharing Defaults
+================
+
+ If you want to set default values for `configure' scripts to share,
+you can create a site shell script called `config.site' that gives
+default values for variables like `CC', `cache_file', and `prefix'.
+`configure' looks for `PREFIX/share/config.site' if it exists, then
+`PREFIX/etc/config.site' if it exists. Or, you can set the
+`CONFIG_SITE' environment variable to the location of the site script.
+A warning: not all `configure' scripts look for a site script.
+
+Operation Controls
+==================
+
+ `configure' recognizes the following options to control how it
+operates.
+
+`--cache-file=FILE'
+  Use and save the results of the tests in FILE instead of
+  `./config.cache'. Set FILE to `/dev/null' to disable caching, for
+  debugging `configure'.
+
+`--help'
+  Print a summary of the options to `configure', and exit.
+
+`--quiet'
+`--silent'
+`-q'
+  Do not print messages saying which checks are being made. To
+  suppress all normal output, redirect it to `/dev/null' (any error
+  messages will still be shown).
+
+`--srcdir=DIR'
+  Look for the package's source code in directory DIR. Usually
+  `configure' can determine that directory automatically.
+
+`--version'
+  Print the version of Autoconf used to generate the `configure'
+  script, and exit.
+
+`configure' also accepts some other, not widely useful, options.
+
+

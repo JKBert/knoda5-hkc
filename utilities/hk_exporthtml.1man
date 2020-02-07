@@ -1,0 +1,65 @@
+.TH "hk_exporthtml" "1" "hk_classes package" "" "http://hk-classes.sourceforge.net"
+.SH "NAME"
+hk_exporthtml \- exports a datasource to a html file.
+hk_exporthtml is part of the hk_classes package.
+
+.SH "SYNOPSIS"
+.B hk_exporthtml \-d driver \-b database [OPTIONS] datasourcename
+
+.SH "DESCRIPTION"
+exports the result set of a query or a table to a HTML file.
+The data will be printed to stdout.
+To create a table or a query use
+.B knoda (http://www.knoda.org).
+If the datasource is not a table set the
+.BR --query
+option.
+.PP
+.SH "OPTIONS"
+.IP  "\-b, \-\-database=DATABASE"
+database name
+.IP  "\-d, \-\-driver=DRIVERNAME"
+set the SQL\-driver (e.g. mysql). You can get a list of all existing SQL\-drivers with
+.BR \-l
+or
+.BR \-\-list
+
+.IP  "\-t, \-\-tabletags=TABLETAGS"
+The tags of the <table> statement, e.g.  BORDER=1 CELLSPACING=1
+
+
+.IP "\-\-aftertable=AFTERTABLETEXT"
+text displayed after the table
+.IP "\-\-beforetable=BEFORETABLETEXT"
+text displayed before the table
+.IP "\-f, \-\-filter=FILTER"
+filter
+.IP "\-\-groupcolumn=COLUMNNAME"
+for each group will be created an extra table
+.IP "\-h, \-\-host=HOST"
+IP\-number or name of hosts
+.IP "\-\-headsection=HEADSECTION"
+meta data in the <HEAD></HEAD> section
+.IP "\-p, \-\-password=PASSWORD"
+user password
+.IP "\-q, \-\-query"
+if set the datasource is a query, else it is a table
+.IP "\-r, \-\-port=PORT"
+TCP\-port on host
+.IP "\-u, \-\-user=USERNAME"
+user name
+.IP "\-?, \-\-help"
+display help list
+.IP "\-\-usage"
+give short usage message
+.IP "\-\-version"
+version and author of hk_classes
+
+.SH "AUTHOR"
+This manual page was written by Mike Schacht <mschacht@alumni.washington.edu> for the Debian project (but may be used by others).
+.SH "SEE ALSO"
+.BR hk_actionquery (1),
+.BR hk_exportcsv (1),
+.BR hk_importcsv (1),
+.BR hk_report (1),
+.BR hk_exportxml (1)

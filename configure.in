@@ -1,0 +1,119 @@
+
+AC_INIT(NEWS)
+dnl AC_PREFIX_DEFAULT(/usr/local/hk_classes)
+AC_PROG_INSTALL
+AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE(hk_classes,0.8.3)
+AM_MAINTAINER_MODE
+
+
+
+AC_ARG_WITH(firebird, AC_HELP_STRING([--without-firebird],[disable Firebird plugins]),[want_firebird=$withval], want_firebird=yes)
+AC_ARG_WITH(firebird-dir,[  --with-firebird-dir=PATH   Path to the Firebird directory],:,:)
+AC_ARG_WITH(firebird-incdir,[  --with-firebird-incdir=PATH   Path to the Firebird header files],:,:)
+AC_ARG_WITH(firebird-libdir,[  --with-firebird-libdir=PATH   Path to the Firebird library],:,:)
+
+AC_ARG_WITH(mysql, AC_HELP_STRING([--without-mysql],[disable MySQL plugins]),[want_mysql=$withval], want_mysql=yes)
+AC_ARG_WITH(mysql-dir,[  --with-mysql-dir=PATH   Path to the Mysql directory],:,:)
+AC_ARG_WITH(mysql-incdir,[  --with-mysql-incdir=PATH   Path to the Mysql header files],:,:)
+AC_ARG_WITH(mysql-libdir,[  --with-mysql-libdir=PATH   Path to the Mysql library],:,:)
+AC_ARG_WITH(hk_classes-incdir,[  --with-hk_classes-incdir=PATH   Path for the hk_classes header files],:,:)
+
+AC_ARG_WITH(postgres, AC_HELP_STRING([--without-postgres],[disable postgres plugins]),[want_postgres=$withval], want_postgres=yes)
+AC_ARG_WITH(postgres-dir,[  --with-postgres-dir=PATH   Path to the postgres directory],:,:)
+AC_ARG_WITH(postgres-incdir,[  --with-postgres-incdir=PATH   Path to the postgres header files],:,:)
+AC_ARG_WITH(postgres-libdir,[  --with-postgres-libdir=PATH   Path to the postgres library],:,:)
+
+AC_ARG_WITH(odbc, AC_HELP_STRING([--without-odbc],[disable odbc plugins]),[want_odbc=$withval], want_odbc=yes)
+AC_ARG_WITH(odbc-dir,[  --with-odbc-dir=PATH   Path to the odbc directory],:,:)
+AC_ARG_WITH(odbc-incdir,[  --with-odbc-incdir=PATH   Path to the odbc header files],:,:)
+AC_ARG_WITH(odbc-libdir,[  --with-odbc-libdir=PATH   Path to the odbc library],:,:)
+
+AC_ARG_WITH(sqlite, AC_HELP_STRING([--without-sqlite],[disable sqlite2 plugins]),[want_sqlite=$withval], want_sqlite=yes)
+AC_ARG_WITH(sqlite2systemlibrary, AC_HELP_STRING([--with-sqlite2systemlibrary],[use sqlite2 library instead of builtin version]),[want_sqlite2library=$withval], want_sqlite2library=no)
+AC_ARG_WITH(sqlite-dir,[  --with-sqlite-dir=PATH   Path to the sqlite2 directory],:,:)
+AC_ARG_WITH(sqlite-incdir,[  --with-sqlite-incdir=PATH   Path to the sqlite2 header files],:,:)
+AC_ARG_WITH(sqlite-libdir,[  --with-sqlite-libdir=PATH   Path to the sqlite2 library],:,:)
+
+AC_ARG_WITH(sqlite3, AC_HELP_STRING([--without-sqlite3],[disable sqlite3 plugins]),[want_sqlite3=$withval], want_sqlite3=yes)
+AC_ARG_WITH(sqlite3systemlibrary, AC_HELP_STRING([--with-sqlite3systemlibrary],[use sqlite3 library instead of builtin version]),[want_sqlite3library=$withval], want_sqlite3library=no)
+
+AC_ARG_WITH(sqlite3-dir,[  --with-sqlite3-dir=PATH   Path to the sqlite3 directory],:,:)
+AC_ARG_WITH(sqlite3-incdir,[  --with-sqlite3-incdir=PATH   Path to the sqlite3 header files],:,:)
+AC_ARG_WITH(sqlite3-libdir,[  --with-sqlite3-libdir=PATH   Path to the sqlite3 library],:,:)
+
+
+
+
+
+AC_ARG_WITH(mdb, AC_HELP_STRING([--without-mdb],[disable mdb (M$Access) plugins]),[want_mdb=$withval], want_mdb=yes)
+
+
+AC_ARG_WITH(xbase, AC_HELP_STRING([--without-xbase],[disable xbase plugins]),[want_xbase=$withval], want_xbase=yes)
+AC_ARG_WITH(xbase-dir,[  --with-xbase-dir=PATH   Path to the xbasetools directory],:,:)
+AC_ARG_WITH(xbase-incdir,[  --with-xbase-incdir=PATH   Path to the xbase header files],:,:)
+AC_ARG_WITH(xbase-libdir,[  --with-xbase-libdir=PATH   Path to the xbase library],:,:)
+
+AC_ARG_WITH(dbase, AC_HELP_STRING([--without-dbase],[disable dbase plugins]),[want_dbase=$withval], want_dbase=yes)
+
+AC_ARG_WITH(paradox, AC_HELP_STRING([--without-paradox],[disable paradox plugins]),[want_paradox=$withval], want_paradox=yes)
+
+
+AC_ARG_WITH(fontconfig-incdir,[  --with-fontconfig-incdir=PATH   Path to the fontconfig header files],:,:)
+AC_ARG_WITH(fontconfig-libdir,[  --with-fontconfig-libdir=PATH   Path to the fontconfig library],:,:)
+
+AC_ARG_WITH(python-incdir,[  --with-python-incdir=PATH   Path to the Python header files],:,:)
+AC_ARG_WITH(python-libdir,[  --with-python-libdir=PATH   Path to the Python library],:,:)
+
+AC_DISABLE_STATIC
+
+AM_PROG_LIBTOOL
+AC_LANG_CPLUSPLUS
+AC_PROG_CXX
+AM_ICONV_LINK
+AM_ICONV
+
+HK_CLASSESINIT
+AC_PYTHON_DEVEL
+dnl AC_MAGIC_EXISTS
+HK_CHECK_LIBXML2
+HK_CHECK_FONTCONFIG
+HK_CHECK_FREETYPE
+HK_DBASETEST
+HK_FIREBIRDTEST
+HK_FIREBIRD2TEST
+HK_MDBTEST
+HK_MYSQLTEST
+PXLIB_BUILD_DATE=`date '+%Y-%m-%d'`
+AC_DEFINE_UNQUOTED(PXLIB_BUILD_DATE,"$PXLIB_BUILD_DATE",[pxlib build date])
+AC_SUBST(PXLIB_BUILD_DATE)
+
+HK_PARADOXTEST
+HK_POSTGRESTEST
+HK_ODBCTEST
+HK_SQLITE2TEST
+HK_SQLITE3TEST
+HK_XBASETEST
+HK_DEFINEDRIVERS
+
+AC_SSTREAM_EXISTS
+AC_IOSTREAM_EXISTS
+HK_CLEARENV_EXISTS
+HK_CHECK_ARGP_EXISTS
+
+
+AC_OUTPUT(Makefile hk_classes/Makefile hk_dbaseclasses/Makefile hk_firebirdclasses/Makefile hk_mysqlclasses/Makefile \
+          hk_postgresclasses/Makefile hk_odbcclasses/Makefile \
+	  hk_sqliteclasses/Makefile hk_sqlite3classes/Makefile \
+	  hk_mdbclasses/Makefile hk_xbaseclasses/Makefile hk_paradoxclasses/Makefile\
+            python/Makefile python/setup.py utilities/Makefile \
+	   documentation/Makefile documentation/tutorial/Makefile 
+)
+
+
+echo ; echo ; echo "**********************************************"; echo ; \
+if test "x$NODRIVER" = "xtrue" ;then echo "W A R N I N G    !!!!" ;	 \
+echo "No database driver will be installed! It makes no sense to run " ; echo "hk_classes without a database driver."; echo "Make sure that you have one of the following SQL databases." ; echo ; echo "Existing drivers are: $POSSIBLE_DRIVERS" ; echo ; echo "Then re-configure and re-make this package." ;\
+echo;echo "If you are sure the database is installed, but you still see this message,";	echo "check your installation. Probably you haven't installed your distribution's ";echo "development package for this database. For Mysql it is called ";echo "mysql-devel (the exact name is distribution specific)";\
+else echo "The following drivers will be installed:"; echo "$DRIVERSDIR" ;fi;echo;   \
+echo "Start make now..."; echo "**********************************************"; echo ;

@@ -1,0 +1,36 @@
+*****************************************
+*                                       *
+*   Welcome to the hk_classes library   *  
+*              README                   *
+*                                       *
+*****************************************
+
+Welcome to the hk_classes library
+
+hk_classes is a set of non-visual routines which allow you to develop
+database frontend applications as easy as possible.
+
+You need also a database driver to run applications. Drivers for
+* mdb (M$ Access),
+* Mysql,
+* Postgresql,
+* SQLite version 2.x,
+* SQLite version 3.x and
+* ODBC
+
+are included in this library and will be automatically installed if 
+configure finds a working Mysql/Postgresql/SQLite/ODBC installation 
+on your computer.
+
+Optionally it is possible to use graphical frontend libraries 
+(e.g. hk_kdeclasses) to write intermediate X-database-applications
+with just a few lines.
+
+Read INSTALL how to install this library.
+
+
+Munich in November 2002
+
+Horst Knorr <hk_classes@knoda.org>
+
+Homepage: http://hk-classes.sourceforge.net

@@ -1,0 +1,60 @@
+.TH hk_actionquery "1" "hk_classes package"  "" "http://hk-classes.sourceforge.net"
+.SH NAME
+hk_actionquery \- executes a query that does not return a result set.
+hk_actionquery is part of the hk_classes package
+
+.SH SYNOPSIS
+.B hk_actionquery -d driver -b database [OPTIONS] queryname
+
+.SH DESCRIPTION
+.B hk_actionquery
+executes a query that does not return a result set (that means queries like UPDATE,INSERT,DELETE,CREATE).
+Use
+.B hk_exportxml
+or
+.B hk_exportcsv
+to execute 'SELECT'-queries.
+If you don't want to execute a predefined query, use 
+.BR --sql
+to add a SQL statement
+
+.SH EXAMPLES
+.TP
+hk_actionquery -d mysql -b exampledb myquery
+.TP 
+hk_actionquery -d mysql -b examplequery --sql "SELECT * from authors"
+.SH OPTIONS
+.IP  "-b, --database=DATABASE"
+database name
+.IP  "-d, --driver=DRIVERNAME"
+set the SQL-driver (e.g. mysql). You can get a list of all existing SQL-drivers with
+.BR -l
+or
+.BR --list
+.IP "-h, --host=HOST"
+name  or IP-number of the host
+.IP  "-l, --list"
+List available database drivers
+.IP  "-p, --password=PASSWORD"
+user password at the SQL server
+.IP  "-r, --port=PORT"
+TCP-port on host
+.IP  "-s, --sql=SQL"
+sql statement that should be executed
+.IP  "-u, --user=USERNAME"
+user name at the sql-server
+.IP "--version"
+version and author of hk_classes
+.SH DIAGNOSTICS
+hk_actionquery returns 0 if everything was ok, or 1 if an error occured. A clear text error message
+will be written to stderr.
+
+.SH AUTHOR
+Horst Knorr <hk_classes@knoda.org>
+.http://hk-classes.sourceforge.net
+
+.SH SEE ALSO
+.BR hk_exportcsv (1),
+.BR hk_exportxml (1),
+.BR hk_importcsv (1),
+.BR hk_report (1)

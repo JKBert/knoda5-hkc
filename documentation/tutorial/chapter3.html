@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Preselect the driver and user information</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="The hk_classes programmer's tutorial"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Get in contact with a table"
+HREF="chapter2.html"><LINK
+REL="NEXT"
+TITLE="Show data of a column"
+HREF="chapter4.html"><META
+HTTP-EQUIV="Content-Style-Type"
+CONTENT="text/css"><LINK
+REL="stylesheet"
+HREF="common/kde-common.css"
+TYPE="text/css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=iso-8859-1"><META
+HTTP-EQUIV="Content-Language"
+CONTENT="en"><LINK
+REL="stylesheet"
+HREF="common/kde-localised.css"
+TYPE="text/css"
+TITLE="KDE-English"><LINK
+REL="stylesheet"
+HREF="common/kde-default.css"
+TYPE="text/css"
+TITLE="KDE-Default"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#AA0000"
+VLINK="#AA0055"
+ALINK="#AA0000"
+STYLE="font-family: sans-serif;"
+><DIV
+CLASS="logoheader"
+><A
+HREF="http://www.kde.org/"
+></A
+></DIV
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The hk_classes programmer's tutorial</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="chapter2.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="chapter4.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="CHAPTER3"
+></A
+>Chapter 3. Preselect the driver and user information</H1
+><P
+>Isn't it disturbing, that you have to select the database driver interactively?
+To stop it change the first part of your code:
+
+<DIV
+CLASS="EXAMPLE"
+><HR><A
+NAME="AEN56"
+></A
+><P
+><B
+>Example 3-1. Preselect the driver and user information</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>   1&nbsp;#include &#60;hk_classes.h&#62;
+   2&nbsp;#include &#60;iostream&#62;
+   3&nbsp;int main()
+   4&nbsp;{
+   5&nbsp;   hk_drivermanager* mydrivermanager = new hk_drivermanager();
+   6&nbsp;   if (mydrivermanager==NULL) {cout &#60;&#60;"error creating mydrivermanager"&#60;&#60;endl;exit(1);}
+   7&nbsp;   hk_connection* myconnection = mydrivermanager-&#62;new_connection(<FONT
+COLOR="RED"
+>"mysql"</FONT
+>);
+   8&nbsp;   if (myconnection==NULL) {cout &#60;&#60;"error creating myconnection"&#60;&#60;endl;exit(1);}
+   9&nbsp;   <FONT
+COLOR="RED"
+>myconnection-&#62;set_host("localhost");</FONT
+>
+  10&nbsp;   <FONT
+COLOR="RED"
+>myconnection-&#62;set_user("root");</FONT
+>
+  11&nbsp;   <FONT
+COLOR="RED"
+>myconnection-&#62;set_password("mypasswd");</FONT
+>
+  12&nbsp;   myconnection-&#62;connect();
+  13&nbsp;.
+  14&nbsp;.
+  15&nbsp;.</PRE
+></TD
+></TR
+></TABLE
+><HR></DIV
+></P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="chapter2.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="chapter4.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Get in contact with a table</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Show data of a column</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

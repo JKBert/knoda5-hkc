@@ -1,0 +1,79 @@
+.TH hk_dbcopy "1" "hk_classes package"  "" "http://hk-classes.sourceforge.net"
+.SH NAME
+hk_dbcopy \- copies database elements between different database backends.
+hk_dbcopy is part of the hk_classes package
+
+.SH SYNOPSIS
+.B hk_dbcopy -d driver -b database --todriver driver --todatabase database [OPTIONS] 
+
+.SH DESCRIPTION
+.B hk_dbcopy
+copies database elements between different database backends.
+.SH Example 
+.IP "hk_dbcopy -d sqlite3 -b exampledb --todriver mysql --touser MyUsername --topassword Secret --whole-database "
+This example will copy all elements of the SQLite database "exampledb" to Mysql
+.SH OPTIONS
+.IP  "-b, --database=DATABASE"
+database name
+.IP  "-d, --driver=DRIVERNAME"
+set the SQL-driver (e.g. mysql). You can get a list of all existing SQL-drivers with
+.BR -l
+or
+.BR --list
+.IP "-h, --host=HOST"
+name  or IP-number of the host
+.IP  "-l, --list"
+List available database drivers
+.IP  "-p, --password=PASSWORD"
+user password at the SQL server
+.IP  "-r, --port=PORT"
+TCP-port on host
+.IP  "--touser=USERNAME"
+user name at the target SQL server
+.IP  "--topassword=PASSWORD"
+user password name at the target SQL server
+.IP  "--todriver=DRIVERNAME"
+driver of the target SQL server
+.IP  "--tohost=HOST"
+name  or IP-number of the target host
+.IP  "--toport=port"
+TCP-port on target host
+.IP  "--all-forms"
+copy all forms
+.IP  "--all-queries"
+copy all queries
+.IP  "--all-reports"
+copy all reports
+.IP  "--all-tables"
+copy all tables
+.IP  "--all-views"
+copy all views
+.IP  "--whole-database"
+copy all database objects
+.IP  "--form=FORM NAME"
+the name of a single form that should be copied
+.IP  "--query=QUERY NAME"
+the name of a single query that should be copied
+.IP  "--report=REPORT NAME"
+the name of a single report that should be copied
+.IP  "--table=TABLE NAME"
+the name of a single table that should be copied
+.IP  "--view=VIEW NAME"
+the name of a single view that should be copied
+.IP  "-u, --user=USERNAME"
+user name at the sql-server
+.IP "--version"
+version and author of hk_classes
+.SH DIAGNOSTICS
+hk_dbcopy returns 0 if everything was ok, or 1 if an error occured. A clear text error message
+will be written to stderr.
+
+.SH AUTHOR
+Horst Knorr <hk_classes@knoda.org>
+.http://hk-classes.sourceforge.net
+
+.SH SEE ALSO
+.BR hk_actionquery (1),
+.BR hk_exportxml (1),
+.BR hk_importcsv (1),
+.BR hk_report (1)

@@ -1,0 +1,74 @@
+.TH hk_importcsv "1" "hk_classes package"  "" "http://hk-classes.sourceforge.net"
+.SH NAME
+hk_importcsv \- imports a csv file.
+hk_importcsv is part of the hk_classes package
+
+.SH SYNOPSIS
+.B hk_importcsv -d driver -b database -t tablename [OPTIONS] CSV-file
+
+.SH DESCRIPTION
+.B hk_importcsv
+imports a csv file and creates the table if necessary.
+.SH OPTIONS
+.IP  "-b, --database=DATABASE"
+database name
+.IP      "--between=BETWEEN"
+column separator, default is ','
+.IP  "-d, --driver=DRIVERNAME"
+set the SQL-driver (e.g. mysql). You can get a list of all existing SQL-drivers with
+.BR -l
+or
+.BR --list
+.IP "--delimiter=TEXTDELIMITER"
+the text delimiter, default is '"'
+
+
+.IP      "--df=dateformat"
+date format, may contain M D Y, example: D.M.Y
+.IP      "--tf=timeformat"
+time format, may contain h m s , example: h:m:s
+.IP      "--dtf=datetimeformat"
+datetime format, may contain M D Y h m s, example: D.M.Y h:m:s
+.IP      "--locale=locale"
+locale of the import file, influences the number appearance
+.IP      "--charset=charset"
+charset of the import file
+.IP      "--noautoincdetection"
+avoids detection of auto_inc data type
+
+.IP "-f, --filter=FILTER"
+filter of the datasource. It has the same syntax as the WHERE clause of a SQL
+statement, just without the 'WHERE'.
+.BR Example:
+"author_id = 5"
+
+.IP "-h, --host=HOST"
+name  or IP-number of the host
+.IP  "-l, --list"
+List available database drivers
+.IP   "--noheader"
+if set the column names will not be included in the first row
+.IP  "-p, --password=PASSWORD"
+user password at the SQL server
+.IP  "-r, --port=PORT"
+TCP-port on host
+.IP  "-t, --table=TABLE NAME"
+the name of the table
+.IP  "-u, --user=USERNAME"
+user name at the sql-server
+.IP  "-w, --overwrite"
+overwrites the table if it already exists
+.IP "--version"
+version and author of hk_classes
+.SH DIAGNOSTICS
+hk_importcsv returns 0 if everything was ok, or 1 if an error occured. A clear text error message
+will be written to stderr.
+
+.SH AUTHOR
+Horst Knorr <hk_classes@knoda.org>
+.http://hk-classes.sourceforge.net
+
+.SH SEE ALSO
+.BR hk_exportcsv (1),
+.BR hk_exportxml (1),
+.BR hk_importcsv (1)

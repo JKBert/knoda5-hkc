@@ -1,0 +1,64 @@
+.TH hk_exportxml "1" "hk_classes package"  "" "http://hk-classes.sourceforge.net"
+.SH NAME
+hk_exportxml \- exports the result set of a query or a table to a XML file.
+hk_exportxml is part of the hk_classes package
+
+.SH SYNOPSIS
+.B hk_exportxml -d driver -b database [OPTIONS] datasourcename
+
+.SH DESCRIPTION
+.B hk_exportxml
+exports the result set of a query or a table to a XML file.
+The data will be printed to stdout.
+To create a table or a query use
+.B knoda (http://www.knoda.org).
+If the datasource is not a table set the
+.BR --query
+option.
+.SH OPTIONS
+.IP  "-b, --database=DATABASE"
+database name
+.IP  "-d, --driver=DRIVERNAME"
+set the SQL-driver (e.g. mysql). You can get a list of all existing SQL-drivers with
+.BR -l
+or
+.BR --list
+
+.IP "-f, --filter=FILTER"
+filter of the datasource. It has the same syntax as the WHERE clause of a SQL
+statement, just without the 'WHERE'.
+.BR Example:
+"author_id = 5"
+.IP  "--fieldnameattribute"
+if set the fieldname is a attribute in the 'field' tag, else it is the field delimiter tag
+.IP "-h, --host=HOST"
+name  or IP-number of the host
+.IP  "-l, --list"
+List available database drivers
+.IP  "--maindocumenttag=MAINDOCMENTTAG"
+the document delimiter tag
+.IP  "-p, --password=PASSWORD"
+user password at the SQL server
+.IP  "-q, --query"
+if set the datasource is a query, not a table
+.IP  "-r, --port=PORT"
+TCP-port on host
+.IP  "--rowtag=ROWTAG"
+the row delimiter tag
+.IP  "-u, --user=USERNAME"
+user name at the sql-server
+.IP "--version"
+version and author of hk_classes
+.SH DIAGNOSTICS
+hk_exportxml returns 0 if everything was ok, or 1 if an error occured. A clear text error message
+will be written to stderr.
+
+.SH AUTHOR
+Horst Knorr <hk_classes@knoda.org>
+.http://hk-classes.sourceforge.net
+
+.SH SEE ALSO
+.BR hk_actionquery (1),
+.BR hk_exportcsv (1),
+.BR hk_importcsv (1),
+.BR hk_report (1)

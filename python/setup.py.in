@@ -1,0 +1,57 @@
+from distutils.core import setup, Extension, Command
+from distutils.sysconfig import get_python_lib
+import os
+
+
+class uninstall(Command):
+	description = "Deletes the hk_classes Python modules"
+	user_options = []
+	def initialize_options(self):
+		pass
+
+	def finalize_options(self):
+		pass
+
+	def run(self):
+		path=get_python_lib()
+		self.announce("removing files")
+		self._removefile(path,"_hk_classes.so")
+		self._removefile(path,"hk_classes.py")
+		self._removefile(path,"hk_classes.pyc")
+
+
+
+	def _removefile(self,directory,fname):
+		if not os.path.isdir(directory):
+			return
+		name=os.path.join(directory,fname)
+
+		if os.path.isfile(name):
+			self.announce("removing '%s'" % name)
+			try:
+				os.remove(name)
+			except OSError, details:
+				self.warn("Could not remove file: %s" % details)
+
+
+
+
+hk_classesmodule= Extension('_hk_classes',
+						define_macros = [ ('MAJOR_VERSION','1'),
+									    ('MINOR_VERSION','0')],
+						include_dirs= ['../hk_classes' , '@XMLINCLUDE@'],
+						libraries = ['hk_classes'],
+						library_dirs = ['../hk_classes/.libs'],
+						runtime_library_dirs = ['@HK_CLASSESDIR@'],
+						sources = ['hk_classes_wrap.cxx'])
+
+setup (	name='hk_classes',
+		version='1.1',
+		description='hk_classes is a database library',
+		author='Horst Knorr',
+		author_email='hk_classes@knoda.org',
+		url='http://hk-classes.sourceforge.net',
+		long_description='',
+		cmdclass={'uninstall': uninstall},
+		py_modules=["hk_classes"],
+		ext_modules = [hk_classesmodule])

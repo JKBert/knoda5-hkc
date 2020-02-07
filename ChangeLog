@@ -1,0 +1,1290 @@
+December 17 2006 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.8.3
+	
+    o Bugfixes
+	o hk_classes/Makefile.am handles --with-fontconfig-libdir correctly
+	o hk_postgresqldatasource: recognizes numeric fields as float
+	o hk_exporthtml: uses UTF8 encoding now
+	o hk_exporthtml: introduction of the --tabletags command line option
+
+
+
+
+October 27 2006 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.8.2
+    	o hk_classes uses libxml2 for decoding XML files
+    	o hk_importcsv: failed imported rows will be displayed at the end of the import
+	o hk_reportxml: optionally exports MS Excel XML format    
+	o hk_dsdatavisible: allows form-based filter definition
+	o module handling added
+	o 64 bit system support
+	o hk_database::savestream, better name parsing to detect extensions
+	o hk_presentation:set_name: stronger name conventions, presentation names can't contain '.' or '/'any more
+	  will be automatically replaced by '_' 
+	
+    o Bugfixes
+	o local file formats that store their tables in a directory can create new tables in empty directories now
+	o hk_importcsv: individual date and time format handling works 
+	o database::set_name: if a database name is set including a full path it will be stripped 
+	  in case the driver does not support a directory as database name.
+	o hk_database::store_connection: connection files contained no well formed XML, fixed. Old connection files
+	  can't be loaded any more (quick and dirty bugfix: embrace the tags with <STOREDCONNECTION> tag manually)
+	o acinclude: --without-sqlite and without-sqlite3 work correctly again
+	o hk_pythoninterpreter: the global and the local dictionary  are combined now
+	o postgresdriver: does not necessarily depend on "template1" any more
+	o hk_report: on_action will be called only once any more 
+	o hk_report: pagebreak works also on following pages
+	o hk_report: does not hang any more when footer section size would be larger than the rest of the page
+	o dbase driver: hk_dbasetable: uses the locale database charset
+	o mdb driver: can read date and time correctly now
+	o hk_datasource: parsing of alias names work again
+    
+    o API changes
+    	o hk_connection NEEDS_DIRECTORY_AS_DATABASE added
+    	o hk_datasource: can display a progress dialog when executing queries
+	o hk_dsdatavisible:: set_filtervalue added
+	o hk_module added
+
+
+
+
+
+April 23 2006 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.8.1a
+    o Bugfixes
+	o a typo in acinclude for fontconfig detection fixed
+
+April 21 2006 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.8.1
+	o font handling for reports improved: hk_classes depends on fontconfig and freetype now
+	o PFB,PFA and truetype fonts can be embedded in reports
+	o Paradox driver supports write access.
+	o Firebird driver supports Firebird 2.x
+	o OUTER LEFT JOIN handling for QBE queries added
+	o SQLite3, Paradox and mdb support is on by default, there is no need to install mdbtools and sqlite3 seperately
+	o test suite for automated tests added (make check)
+
+    o API changes
+	o hk_font   psfontname(), list<hk_string>* fontlist() and text2lines() added
+	o hk_reportsection: print_section() and  set_print_section() added. With these functions whole sections can be
+	  invisible while printing
+	o hk_reportdata set_dynamic_height() and dynamic_height() added
+	o hk_subform: activate_subform() added
+	o class hk_mimetype added
+	o hk_datasource and hk_column:    have datetimeformat() ,dateformat() and timeformat() now
+	o hk_datasource:delete_rows is virtual now
+
+
+    o Bugfixes
+	o the XML export filter did not create valid XML when the datasourcedefinition was included, fixed
+	o hk_report: Postscript neededFonts lists works correctly now
+	o hk_paradoxtable: does not crash any more when the file name extension consists of capital letters
+	o hk_dsdatavisible: bugfix for hk_dsgridcolumn for the usage of defaultvalues
+	o hk_postgresqldatabase and hk_postgresqlcolumn: handles date formats 'SQL' and 'German' for the variable 
+	  'datestyle' in the file postgresql.conf
+	o hk_string: smallstringconversion, bug fixed for multibyte conversion (especially UTF-16)
+	o hk_sqlite3column and hk_sqlitecolumn: driver_specific_transformed_asstring_at fixed to handle the 
+	  databasecharset correctly.
+	o the Mysql driver supports non-standard named unix sockets (different from /var/lib/mysql/mysql.sock), 
+	  the correct socket must be set in the [client] section of the ~/.my.cnf file (or the /etc/my.cnf file 
+	  if the user has read access).
+	o hk_mdbtable: the lineend mark will be converted from dos to unix format.
+	o hk_report: does not crash any more when containing a subreport and trying to execute the report while 
+	  loading the report definition 
+	o new Python detection in the configure script
+	o command line tools: the command line option -l (--list) does not give a segmentation fault any more
+
+
+
+October 23 MET 2005 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.8
+	o hk_importcsv: better fieldtype detection including datetime,date,time and auto_inc
+	o hk_datasource: referential integrity handling added,
+		supported by the following drivers:
+		* firebird
+		* postgres
+	o Mysql driver supports views (for Mysql 5.x)
+	o new command line tool hk_dbcopy added. With this all database elements (tables etc) can be copied
+	  even between different database backends like mysql and postgres
+	o hk_datasource: is able to handle manual updateable rows
+
+    o API changes
+	o hk_importcsv:set_detect_autoinc() and  bool detect_autoinc() added
+	o hk_string convenience function standardstring2int added
+	o hk_database:set_databasecharset() added (for driver specific charset handling), used for driver xbase,
+	  sqlite2 and sqlite3
+	o hk_connection need_enum NEEDS_NOTHING removed, NEEDS_LOGIN added
+	o hk_datasource:set_automatic_data_update() is_automatic_data_update() added
+	o hk_database:set_automatic_data_update() is_automatic_data_update() added
+	o hk_class:set_default_automatic_data_update() default_automatic_data_update() added
+	o hk_visible:set_movebuddylabel(bool) added, with this function the automatic movement can be switched off
+	
+
+    o Bugfixes
+	o hk_sqlite3datasource, hk_firebirddatasource: insert_row, will inform visible objects before inserting,
+	  so default values will be set
+	o hk_dsgrid: returns the non-visible columns also for queries
+	o hk_reportdata: handles NULL values correctly
+	o the Mysql driver supports unix sockets
+	o the mysql driver does not crash any more when one connection is closed and a new one is created
+
+
+
+
+July 05 MET 2005 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7.4a
+      	o hk_button: toggle behaviour added
+
+    o API changes
+
+    o Bugfixes
+	o Memocolumns don't escape ' twice any more
+
+
+June 25 MET 2005 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7.4
+	o Firebird driver  added
+	o mdb driver (MS Access) added
+	o xbase driver (DBase) added
+	o paradox driver (Corel Paradox) added
+	o sqlite3 driver supports 'ALTER TABLE ADD COLUMN'
+	o sqlite3 driver supports 'ALTER TABLE RENAME TO'
+	o sqlite3 driver supports binary field type
+	o stringstream handling improved
+	o hk_button: supports icons now
+	o hk_dsimage added: supports standalone pics, data aware binary pics and data aware url pics
+
+    o API changes
+	o hk_class::show_directorydialog() added
+	o hk_connection::mimetype() added
+	o hk_connection::maxfieldnamesize(void) added
+	o hk_connection: finer grained "server_supports" added
+	o hk_connection::check_capabilities(hk_connection* from,hk_connection* to);
+	o hk_connection::maxcharsize(void) added
+	o hk_visible:show_widget(),hide_widget() and close_widget() added
+	o hk_visible::set_buddylabel() added
+	o hk_visible::set_enabled() added
+	o hk_dsdatavisible::action_on_valuechanged added
+	o hk_visible::presentationmode_changed returns bool now (was void)
+	o hk_datasource::backendsql() added
+	o hk_form::screen_width() and screen_height() added
+
+	o hk_dscombobox: on_select action added
+	o hk_database::set_name() is virtual now (needed for Firebird)
+	o Objects stored in central table "HKCLASSES" may have names of maximum 190 characters
+	  (due to limitations of Firebird), previously it was 255 characters.
+	o struct_raw_data: member 'data' changed type from 'const char*' to 'char*'
+	o New Python method hk_form::get_pyvisible added, this way the cast_xxx functions
+	  are not required any more in Python scripts
+
+
+    o Bugfixes
+	o hk_reportdata: String constants will be encoded correctly now
+	o Compilation problems with gcc 4.0 fixed
+	o hk_dsdatavisible: defaultvalue handling (designdata/viewdata) corrected
+	o hk_mysqltable: columns for ALTER COLUMN will be in identifier delimiter now
+	o hk_mysqltable: Adding a primary key to a table without a primary key works again
+	o hk_mysqlconnection: Library gets correct init call
+	o hk_postgresdatasource::driver_specific_create_columns, if column size is variable
+	  PQfsize returns -1, the column size for varchar will then be automatically set to 255.
+
+
+
+March 23 MET 2005 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7.3
+	o taborder handling added
+	o improved field name detection for conditions in combination with depending resultqueries
+
+    o API changes
+	o hk_button: open_view and close_application action added
+	o hk_class::show_filedialog() added
+	o Python API: the C++-API is fully opened to Python now
+	o hk_visible, hk_dsvisible: all actions hold their information in p_designdata/p_viewdata now
+	o hk_database: new_dialogformvisible() added
+	o hk_form: show_asdialog() added
+	o hk_database  existing_form() and existing_report() added
+	o hk_column: count() and sum() added
+	o hk_visible: on_getfocus and on_loosefocus actions added
+	o hk_visible: set_tooltip(), tooltip() added
+	o hk_report: is_subreport() added
+	o hk_report::while_executing() added
+
+    o Bugfixes
+	o hk_postgresqltable: renaming columns handles identifier delimiters correctly now
+	o hk_postgresqltable: setting NOT NULL for ALTER TABLE works now
+	o hk_sqlitedatasource, hk_sqlite3datasource: batchwrite handling corrected
+	o hk_sqliteconnection, hk_sqlite3connection: dblist only looks for real files
+	  and no directory entries any more
+	o hk_sqlitedatasource, hk_sqlite3datasource: does not crash any more if a column is
+	  defined without a type
+	o hk_drivermanager: searches for OS specific shared library suffix
+	o hk_connection::new_database returns NULL if 'name' does not exist
+	o hk_database::central_filelist sorts the list now
+	o hk_report: page headers and footers show the data of the correct row now (it did show the
+	  one of the previous row)
+	o hk_reportsection: does not crash any more when the subreport is deleted
+	o hk_drivermanager: frees the driver shared libraries when the drivermanager is deleted
+
+
+November 28 MET 2004 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7.2
+    	o View support added
+	o hk_connection: passworddialog accepts a defaultdatasource for ODBC now
+	o SQLite3 support added
+	o local databases in different directories can be opened now
+
+    o API changes
+    	o bool hk_column::changed_data_is_nullvalue() added
+	o hk_datasource: bool index_exists() added
+	o hk_datasource: bool while_disabling(),while_enabling(), while_row_changed() added
+	o hk_dscombobox: supports a new mode combo_noedit
+	o hk_url added
+	o hk_presentation::enable_datasources made public
+
+    o Bugfixes
+	o ODBC driver: much improved, mainly in combination with SAPDB
+	o ODBC driver: NULL values will be displayed as NULL.
+	o ODBC driver: works better with IODBC
+	o hk_dsgrid: does not crash any more when a corrupted definition will be loaded
+	o SQLite2: acinclude check did set wrong path information
+	o NULL value handling improved (hk_dsgrid, hk_dsdatavisible, hk_dscombobox)
+	o hk_database::store_central, storing existing objects with a new name works again
+	o hk_column: changed_data_asstring will handle NULL values correctly now
+	o Postgres driver: supports presetting the database name now, useful for people who
+	  don't have access to template1 database
+	o Postgres driver: handles backslashes correctly
+	o hk_datasource: does not reset changed data any more when inserting did not work.
+	o hk_database: existing_form() and existing_report() return objects only if they are
+	  not subforms or subreports respectively
+	o hk_sqlite3datasourcem hk_sqlitedatasource: fixed memory leak
+
+
+
+Sepember 16 MET 2004 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7.1
+	o subforms added
+	o hk_button: conditions beginning with '%' will not be escaped any more
+	o hk_datasource: depending_on fields beginning with '%' will not be escaped any more
+	o hk_postgresdatabase: displays views and handle them as tables
+
+    o API changes
+    	o hk_subform added
+
+    o Bugfixes
+	o hk_form: does not crash any more when a form is loaded more than once, the visible
+	  list is cleared correctly
+	o hk_report: does cancel execute() when there is an error in a subreport
+	o hk_sqliteactionquery: the correct fielddelimiter is set (for update queries)
+	o hk_qbe: UPDATE and DELETE functions improvement (the table.field naming scheme
+	  caused some troubles with sqlite)
+	o hk_button: parse_conditions now sets the column names correctly with tablename.columnname
+
+
+July 11 MET 2004 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7
+	o  class hk_qbe added
+	o  class hk_dsquery moved from file hk_dsmodevisible.h to it's own hk_dsquery.h
+	   (same with hk_dsquery.cpp)
+	o  class hk_dstable moved from file hk_dsmodevisible.h to it's own hk_dstable.h
+	   (same with hk_dstable.cpp)
+	o  central storage (in a system table on the sql server) of queries, forms and reports
+	   added
+	o  Sqlite driver added. Uses Sqlite 2.x - version 2.8.14 is recommended
+
+    o API changes
+	o  hk_presentation: set_block_has_changed(), block_has_changed() added
+	o  hk_dsmodevisible: variable p_mode made private (was protected )
+	o  hk_datasource::clear_depending_fields() has now a parameter bool registerchange
+	o  hk_datasource::set_query(hk_qbe*) added
+	o  functions save_query and load_query moved from class hk_dsgrid to hk_dsquery
+	o  hk_actionquery::set_sql got additional parameter 'convertdelimiter'
+	o  hk_database::set_usewidgetparent type changed from void* to hk_class*
+	o  hk_database and hk_dbvisible: signal list_changes() works also for dbvisible objects now
+	o  hk_database: disable() added (ideally called before delete)
+	o  hk_definitions.h: filetype ft_index removed
+	o  hk_definitions.h: new types defined, objecttype, listtype
+	o  all objects: the previous universal used filetype is now split in filetype, objecttype,listtype
+
+
+
+    o Bugfixes
+	o hk_datasource: If the Sql statement was changed during runtime (e.g. a script in a form or a report)
+	   it will be reset when enabling
+	o hk_datasource: set_depending_on(): did not delete the connection to a previous master datasource, fixed
+	o hk_presentation: unique_datasourcename() does not crash any more if no datasource was found
+	o hk_reportutils: Postscript reports did crop off rows at the bottom of a page in sizetype=absolute mode
+	  , fixed
+	o hk_database inform_datasources_filelist_changes will be sent when a table is deleted
+
+
+
+April 04 MET 2004 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6.3
+    	o the password will be stored in the file .hk_classes/SERVER/driver.conf, the RW-flags are set to the user only
+	o hk_presentation: presentation local datasources can be defined in the datasource dialog
+	o Python script handles uninstall now
+
+    o API changes
+    	o hk_reportdata: beforedata() and afterdata() added.
+	o hk_dsdatavisible: find() added
+	o hk_dsgrid:set_rowheight() added
+	o hk_label: supports border lines now
+	o hk_datasource: insert_row, update_row and delete_row returns  a result yet
+	o hk_datasource: set_internal_filter, internal_filter,set_use_internalfilter,use_internalfilter added
+
+    o Bugfixes
+	o acinclude and hk_classes-Makefile.am has been modified: if --prefix was used the driverpath was set to: $(exec_prefix)/hk_classes.
+	   The variable was not expanded. fixed
+	o hk_database: clears the hk_dbvisible list now, and does not crash any more when a hk_dbvisible object exists
+	o ODBC driver: correct handling of boolean fields
+	o ODBC driver: SAPDB returns unicode field names, will be handled correctly
+	o Postgresql driver: boolean fields work again
+	o an additional \n is added to Python scripts to work with Python 2.2
+	o Python API: hk_dsboolean added, so no bugfix: hk_dsboolean added,
+	   so no "error while loading hk_this=currentboolean()" appears any more
+	o hk_importcsv: will not set empty values in numeric fields any more (and thus create non-valid SQL statements)
+	o hk_connection::create_database, does not crash any more when the used action query could not be created
+	o hk_mysqldatasource: more than 8 digits will be accepted
+
+
+November 16 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6.2
+    	o Python interface updated: hk_datasource filter handling added, indices(), hk_column.has_changed() added
+	o hk_datasource: hk_classes SQL has server independent delimiters now: according to the SQL standard text is delimited in ' (quote) and
+		fields are delimited in " (doublequote) : a valid SQL statement would be then (indepenent from the underlying server)
+		SELECT 'my field' WHERE 'my field'="value"
+	o hk_interpreter: Python sets automatically the variables hk_thisform and hk_thisreport
+
+    o API changes
+    	o hk_column: changed_data_asdouble(),changed_data_asinteger() added
+	o hk_column: curval_asstring(),curval_asbool(),curval_asdouble(),curval_asinteger() added
+	o hk_dsdatavisible: set_value(const hk_string&) and value() added
+
+    o Bugfixes
+     	o acinclude accepts Python 2.3
+	o Mysql and postgresql: Add index corrected name delimiter
+	o Postgres driver: hk_postgresqldatasource::driver_specific_columns now delivers the resulting
+	  columns when the datasource name contains non-ascii characters
+	o hk_database::copy_table loading does not ignore space characters any more. This will have an effect on
+	   copy/Paste of tables
+	o hk_reportdata: float point numbers were rounded always to .0 , fixed
+	o hk_report:p_visibletype set
+	o hk_connection: set_password works again. The driverspecific functions were unable to create a actionquery
+	o hk_datasource::reload_data stores changed data before reloading
+
+
+
+
+October 19 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6.1
+    	o hk_importcsv: recognises boolean field type now
+	o Python support added. hk_classes is now available as a Python module
+	o Forms and reports have scripting support (Python) now
+	o hk_visible  actions added: on_click_action, on_doubleclick_action, on_open_action, on_close_action
+	o hk_dsvisible actions added:before_row_change_action, after_row_change_action, before_update_action,
+	   after_update_action, before_delete_action, after_delete_action, before_insert_action, after_insert_action
+	o hk_report, hk_reportdata: print_data_action,on_new_page_action added
+	o acinclude.m4 changed: if a prefix is set libraries will be now installed in $libdir/hk_classes and header files
+	   in $includedir/hk_classes.
+	o documentation added: hk_classes tutorial and api documentation
+	o table and column names are now delimited,  special characters are allowed now
+
+    o API changes
+       o hk_actionquery::set_sql(const hk_string&) added
+       o hk_presentation: modes 'view' and 'design' renamed to 'viewmode' and 'designmode'
+       o hk_dsmodevisible added ,which is the new parent of hk_presentation
+       o hk_column: set_asdouble, set_asinteger, asinteger, asdouble added
+       o hk_datasource: field names are now within driver specific delimiters
+       o hk_presentation: snap2gridx and snap2gridy added
+       o hk_database: rename_file added
+
+    o Bugfixes
+    	o ODBC driver works with SAPDB now
+	o Forms and Reports are now stored correctly when using the ODBC driver
+	o hk_datasource::add_row and ::update_row memory leak fixed
+    	o hk_report: clears counting fields when executed more than one time
+	o hk_postgresqldatasource: recognizes numeric type
+	o hk_class: show_stringvaluedialog does read whole lines and not just one word
+	o hk_database: new_table,new_resultquery and new_actionquery return NULL if database does not exist
+	o Makefile.am of directory 'python' changed
+	o locale handling: the environment stays at "C" and not to the users locale
+	o hk_class::set_preferences is XML conform now
+	o hk_dsdatavisible loaddata: sets numberformat correctly
+	o hk_datasource: does not crash any more when table structure changes while program is closing
+
+
+ April 28 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6
+	o hk_font added
+	o linked with the python library
+	o int2hex() added
+	o hk_presentation: set_sizetype added. With this fields in forms can either be set in
+	  pixel size or in percent
+	o hk_connection::emulate_boolean added. E.g. Mysql does not natively support a boolean type, so TINYINT
+	  is used
+	o hk_dsgridcolumn: find() added, so it can also be searched in comboboxes
+
+
+    o API changes
+    	o hk_visible: set_font etc, changed to use hk_font
+	o hk_form: widget_specific_new_grid, widget_specific_new_lineedit,widget_specific_new_boolean,
+	  widget_specific_new_label,widget_specific_new_button,widget_specific_new_rowselector,
+	  widget_specific_new_memo are abstract now
+	o hk_button: bool push_action  is abstract now
+	o hk_datasource: set_depending_on returns bool now
+	o all drivers: return version number now
+
+    o Bugfixes
+        o replace_all does not to replace empty strings any more
+	o hk_presentation: does not clear the datasource list before saving
+	o Queries including a "<" (lesser than) are stored correctly now
+	o hk_font: fontname when loading is set correctly now
+	o hk_reportutils: Postscript shows page footer now
+	o hk_datasource: parsing of subselects with "WHERE" statements corrected
+	o hk_datasource, hk_column: apostrophs for numbers in sql statements
+	  removed (thanks to Erik Norvelle)
+
+
+
+
+
+
+ January 19 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.6
+	o hk_reportsection: offset added (additional space at the end of the section)
+	o hk_button: can open and print reports depending on form datasources
+	o hk_column: new columntype 'timestampcolumn' added
+	o class hk_colour added
+	o colour management added to hk_visible
+	o hk_presentation: method bulk_operations added to allow a central change of font,foreground and
+	  background colour to all widgets of a presentation.
+	o hk_visible: raise_widget and lower_widget added
+	o hk_datetime: most operators (>,<,<< etc)overridden
+	o command line utilities added: hk_report, hk_actionquery,hk_exportcsv, hk_exportxml, hk_importcsv
+
+    o API changes
+	o hk_class, hk_drivermanager, hk_connection: enum_interaction added: classes that previously an boolean
+	  parameter have changed to this enum (defined in hk_class)
+
+    o Bugfixes
+	o hk_dsgrid.cpp: memory leak fixed in clear_cols()
+	o all drivers: catches memory allocation errors
+	o hk_datetime: now parses date and time strings correctly which don't have a separator:
+	  e.g. '20020101' for the first of January 2002
+	o hk_importcsv: works with csv-files that don't have column names in the first row
+	o hk_importcsv: new parser, should work without any problems now
+	o hk_exportcsv: handles textdelimiters correctly now
+	o hk_datasource/hk_dscombobox in combination with postgresql: combobox does react on changes
+	  correctly now
+
+
+
+
+
+
+ November 22 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.5
+        o defaultfont can be selected now
+	o defaultdriver can be selected now
+	o defaultnumberformat can be set now
+	o defaultalignment can be set now
+	o hk_column:: set_asstring allows "TRUE" and "FALSE" for boolean columns now and asstring_at returns "TRUE" and "FALSE" now
+	o ODBC driver added: works with both UnixODBC and IODBC
+
+
+    o API changes
+        o hk_column: NULL value handling added: is_nullvalue,is_nullvalue_at, set_asnullvalue
+	o set_alignment ,alignment: moved from hk_dsdatavisible to hk_visible
+	o hk_visible: open_maximized_window added. If true and the object is a standalone window it will be shown maximized
+	o hk_connection: default_tcp_port added
+	o hk_connection: "int server_needs" replaced with "bool server_needs(need_enum)"
+			 and "int server_supports" replaced with "bool server_supports(support_enum)"
+	o hk_visible: p_font, p_fontsize made private now
+	o hk_presentation: set_automatic_enable_datasources added
+	o hk_datasource: set_accessmode() added 3 possibilities: standard, batchread, batchwrite
+	o hk_reportsectionpair: set_ascending_order added
+	o hk_class get_tagvalue and set_tagvalue for type "int" added
+	o hk_datasource: column_by_name(const hk_string& c, int colnumber) added
+	o hk_datasource: goto_row,update_row,insert_row,delete_row are virtual now
+	o hk_datasource: columnname_occurances(const hk_string&) and  columnname_occurance(hk_column*) added
+	o hk_report, hk_reportsection: all "default" functions like set_default_data renamed to set_defaultreportdata
+	  to avoid naming problems with the with this release introduced default functions
+
+    o Bugfixes
+    	o hk_datasource: if it is a depending datasource and read_only it will send a "disable" signal to visible
+	  objects if datasource is empty
+	o hk_datasource: does not crash any more when a group by query will be added with a oder by statement
+	o hk_connection: databaselist is sorted now
+	o memory leak fixed in the postgres driver, all memory allocation changed to the new/delete mechanism
+	o Mysql driver adds the table name to the columnname if there exists already another column with this name
+	o hk_reportutils.cpp: recode_postscript encodes brackets correctly now (thanks to Brian Harris)
+	o hk_reportutils.cpp: landscape works not just for the first page now
+	o hk_report.cpp: creates correct landscape/portrait meta information for postscript now
+	o hk_report.cpp: empty pages at the end will not be printed any more and new_page_after_section works now for
+	  reportheaders
+	o hk_report.cpp: correct handling of userdefined papersizes
+	o hk_dsgrid.cpp: memory leak fixed in clear_cols()
+
+
+
+
+
+
+ September 22 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.4
+    o Postgres driver added. Use Postgres version 7.1 or higher
+
+    o API changes
+    	o hk_datasource: before_source_vanishes is now protected (not private)
+	o hk_datasource: driver_specific_before_drop_table added
+	o hk_datasource: set_temporaryfilter, set_temporarysorting added
+    	o hk_string.h: functions localestring2int and localestring2uint added
+    	o hk_class: all set_tagvalue members have been changed to accept ostream instead of ofstream
+    	o all classes: savedata members have changed to accept ostream instead of ofstream
+    	o hk_datasource, hk_column: save_datasourcedefinition, load_datasourcedefinition, load_columndefinition,
+    	  save_columndefinition added which allow to store and load the table structure in the xml-format and
+    	  so in a database driver independent way.
+	o hk_database: fileendings() made public
+	o hk_database: convenience functions of  savestream added
+	o hk_database::copy_table added
+	o hk_dsdatavisible:: value_at() added, which delivers the formatted string of a column
+	o hk_column: convenience function set_asstring(const hk_string&) added
+	o hk_column: hk_datasource* datasource(void) added
+	o hk_column: set_asblob, asblob renamed to set_asbinary, asbinary
+	o hk_column: set_allow_autoincwrite added
+	o hk_connection: hk_drivermanager* drivermanager(void) added
+	o hk_connection: database_exists() added
+	o hk_connection: copy_database() added
+	o hk_drivermanager: find_existing_connection added
+
+    o Bugfixes
+   	o hk_dsdatavisible defaultvalue: it is possible now to have empty defaultvalues for numbers
+	o fixed memory leak in hk_mysqltable
+	o the autoconf system checks now whether to include <iostream> or <iostream.h>
+	o hk_column: delivers changed_data_asstring correctly formatted now if value is of type integer
+	o hk_dscombobox: numbers are displayed formatted now even if no list- or viewcolumn is defined
+	o hk_report: values in the page footer section on the last page weren't printed, fixed
+	o hk_datasource: crashed while inform_visible_objects_new_columns_created() fixed
+	o hk_datasource: memory leak fixed insert_row and update row calculates needed space correctly now
+	o hk_mysqltable: create_table works now with gcc-3.2
+
+
+
+
+
+
+ June 16 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.3
+    o configure script updated: parameters added
+       --with-mysql-dir
+       --with-mysql-incdir
+       --with-mysql-libdir
+       --with-hk_classes-incdir
+    o new default installation directories to follow the Filesystem Hierarchy Standard
+       the libraries will be installed in     /usr/lib/hk_classes
+       the header files will be installed in  /usr/include/hk_classes
+    o hk_dsgridcolumn handles row selection now
+
+    o API changes
+        o hk_visible returns presentation() now
+	o hk_dsgridcolumn handles combobox value correct now
+	o hk_dsdatavisible supports number formatting now (set_numberformat,use_numberseparator,commadigits)
+	o hk_column supports localized numberstrings now, the functions asstring, set_asstring etc have an
+	  additional paramater 'bool is_locale' now
+	o the string functions "replace_all" and "format_number and its derivates are moved from hk_definitions.h
+	  to hk_string.h
+	o alignmenttype has been removed from hk_definitions.h and added to hk_dsdatavisible.h
+	o hk_column::sql_column_delimiter removed
+	o hk_drivermanager: new parameter 'interactive' added to function new_connection
+	o hk_class::setlocale() and hk_class::locale() added
+
+    o Bugfixes
+    	o hk_reportutils: postscript works now better with cups
+	o hk_reportutils: postscript sections were measured wrong (too much space between sections), fixed
+	o hk_drivermanager: loads preferences correctly now (conversion from UTF8 did not work as one
+	  undefined character had to be converted)
+	o hk_datasource: parses GROUP BY statements correctly now
+	o hk_datasource: depending datasources in sublevels change also now
+	o hk_dsvisible: has readonly flag now (set_readonly(), is_readonly())
+	o hk_datasource: readonly state will be stored now
+	o hk_datasource: delimiter for depending on fields changed from " to '
+	o hk_column: handles bool values correctly now if the field type is numeric
+
+
+
+
+
+ May 21 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.2
+
+    o hk_class,hk_drivermanager: the hk_classesdriverpath can be stored and changed now
+    o hk_dsgridcolumn: type columncombo added
+    o hk_datasource: insertrow only write fields with changed values now
+
+    o API changes
+    	o hk_database::set_name return value now of type bool
+	o hk_dsgrid load_table,save_table added
+	o hk_dsgridcolumn::value_at added
+	o hk_datasource: convenience function set_enabled(bool) added
+
+    o Bugfixes
+    	o hk_presentation: round differences in relativ2horizontal/vertical removed
+	o hk_presentation: datasources will be saved now when database will be destroyed
+	o hk_report: sections will be stored in the correct order now
+   	o hk_database: Queries within presentation weren't transformed from utf8 to local charset
+	  fixed
+	o hk_datasource: will not crash any more when the database will be deleted before changed
+	  data is written
+	o hk_datasource: if depending on datasource is in insertmode then depending datasource::enable()
+	  does not enable any more
+	o hk_storagedatasource: will not crash any more if a non-existing datasource is deleted
+	o hk_dscombobox: will not crash forms when storing
+	o hk_column/hk_connection: will not crash any more when data is written while disconnecting
+	o hk_mysqldatasource: timestamp columns didn't show the values, fixed (is now shown as fieldtype: "other")
+
+
+ March 17 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.1
+    	o Forms, reports and queries are stored in UTF-8 now
+	o XML Export added
+    o API changes
+    	o hk_drivermanager constructor has no default value any more.
+	o hk_string charset conversion routines added
+	o hk_connection::show_passworddialog is public now
+	o hk_connection::dblist and hk_connection::driver_specific_dblist returns
+	  a non-const vector list now
+	o the protected hk_connection::p_databaselist isn't a pointer any more
+	o the protected hk_database::p_tablelist isn't a pointer any more
+
+    o Bugfixes
+       	o automatic storage of changed data when disabling improved
+	o CSV importfilter crashed when a data line has less data than expected, fixed
+	o CSV importfilter crashed when table has to be deleted before filled, fixed
+	o export filter did some strange number formatting, fixed
+	o hk_datasource: if filter is set, but no sql statement it crashed, fixed
+	o hk_datasource: if rowsize=0 and in insertmode gets a storechanged data, it will stay now in
+	  insertmode
+	o hk_dsgrid: no crash any more if a form is saved with a grid that has no datasource set
+	o all hk_dsvisible derived objects objects: fixed some potential crashes when datasource() returns NULL
+	o fixed a small memory leak in hk_database::load
+
+    o Misc
+    	o Mysql driver supports the mysql_real_escape_string function, if existing,
+	 localhost so Mysql databases get a better localisation
+        o The installation process has better information now, when no database driver could be compiled
+
+
+
+
+ February 12 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5
+    o hk_report changes
+    	o dynamic reporttype
+	o fontencoding added, stored together with the hk_classes preferences
+	o reportheader and reportfooter added
+
+    o API changes
+	o hk_report, hk_reportsection, hk_reportdata: actual_hk_string renamed to actual_string
+	o hk_report: page_head renamed to page_header, page_foot renamed to page_footer
+	o hk_reportpostscript removed, use hk_report in combination with method "set_reporttype(Postscript)" now
+	o hk_reportutils.cpp: hk_reportcvs renamed to correct name hk_reportcsv
+	o hk_datasource: set_blockvisiblesignals, set_blockdatasourcesignals,set_blockserversignals added
+	o hk_datasource, hk_mysqldatasource: set_newpassword added to change passwords.
+
+    o bugfixes
+    	o hk_datetime handles time "12:00:00" correctly now
+	o hk_datasource SQL statements with "WHERE" statements are handled correctly now
+	o replace_all: non recursive replacement works now correctly
+	o hk_class: set_tagvalue and get_tagvalue now more XML conform: replaces '<' with '&lt;'
+	  and '&' with '&amp;'
+	o hk_report && hk_reportsection: memory leak fixed: sections and data will be deleted now,
+	  when the report is destroyed
+	o hk_presentation: loading of multiple datasources works correctly now
+	o hk_connection: bug in storage path (~./hk_classes/driver/host/database ) fixed
+	o hk_column: changed_asstring date/time was not displayed correctly
+	o hk_importcsv: no crash any more when there is a textdelimiter within the data
+
+    o Misc
+    	o hk_datasource: unneccessary code removed (p_oldcolumns)
+	o acinclude bugfix: if mysql is not on the computer libmysql will not be linked any more
+	o mysql driver: prints server error messages to cerr.
+	o XML output formatted
+
+
+
+ October 09 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.3
+    o resultqueries should use for boolean values %TRUE% and %FALSE% now to be independent from the
+      database driver (Mysql for instance does not have boolean fields, it has to be imitated by hk_classes)
+    o hk_class and hk_drivermanager: runtime option added, when set no manipulation of table,
+      query and form structures is possible.
+    o hk_dsdatavisible:default values %NOW%, %NOWDATE% and %NOWTIME% added
+    o hk_datetime:  set_now function  added
+    o bugfixes
+       	  o no double mentioned datasources in forms any more
+	  o hk_csvimport.cpp: empty fields are really empty now
+	  o hk_column & hk_csvimport: space characters in columnnames are
+	    replaced now with "_"
+	  o hk_mysqltable create table with column without name will not hang any more
+	  o hk_datasource: re-setting depending_on datasources works now
+	  o hk_datasource: deleting rows was rejected under certain circumstances, fixed
+
+
+ August 03 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.2
+    o API changes
+       o default values in forms now possible
+       o defaults for date and time format can be stored now
+       o hk_dsdatavisible::set_column renamed to hk_dsdatavisible::set_columnname
+       o hk_reportbase removed
+       o hk_report  reparented to hk_presentation
+       o hk_reportsection and hk_reportdata reparented to hk_dsdatavisible
+       o hk_visible changed. date and time format functions added
+
+
+ August 02 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.1.a
+    o csvexport bugfix
+
+
+ July 07 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.1
+    o hk_dsgrid: gridcolumn management changed and improved.
+    o hk_mysqlclasses is part of hk_classes now, so it is not necessary to install a separate driver
+    o hk_classes class renamed in hk_drivermanager
+    o hk_column API changed internally ( driver_specific_asstring removed)
+    o hk_datasource: transaction support added
+    o hk_datasource: depending datasources with different modes to get a kind of referential integrity
+    o hk_datasource: depending datasources can optionally react on changed (but not stored) master data
+    o combobox API changed
+    o combobox support in forms
+    o bugfix in hk_column::find, hk_dsdatavisible::column
+
+ June 21 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4
+    o API updated, function names get more logic (hopefully)
+    o form support added
+    o bugfixes
+
+ April 08 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.3.1
+    o fixed the compilation problems
+
+
+ April 04 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.3
+    o first public release
+September 16 MET 2004 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7.1
+	o subforms added
+	o hk_button: conditions beginning with '%' will not be escaped any more
+	o hk_datasource: depending_on fields beginning with '%' will not be escaped any more
+	o hk_postgresdatabase: displays views and handle them as tables
+
+    o API changes
+    	o hk_subform added
+
+    o Bugfixes
+	o hk_form: does not crash any more when a form is loaded more than once, the visible
+	  list is cleared correctly
+	o hk_report: does cancel execute() when there is an error in a subreport
+	o hk_sqliteactionquery: the correct fielddelimiter is set (for update queries)
+	o hk_qbe: UPDATE and DELETE functions improvement (the table.field naming scheme
+	  caused some troubles with sqlite)
+	o hk_button: parse_conditions now sets the column names correctly with tablename.columnname
+
+
+July 11 MET 2004 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.7
+	o  class hk_qbe added
+	o  class hk_dsquery moved from file hk_dsmodevisible.h to it's own hk_dsquery.h
+	   (same with hk_dsquery.cpp)
+	o  class hk_dstable moved from file hk_dsmodevisible.h to it's own hk_dstable.h
+	   (same with hk_dstable.cpp)
+	o  central storage (in a system table on the sql server) of queries, forms and reports
+	   added
+	o  Sqlite driver added. Uses Sqlite 2.x - version 2.8.14 is recommended
+
+    o API changes
+	o  hk_presentation: set_block_has_changed(), block_has_changed() added
+	o  hk_dsmodevisible: variable p_mode made private (was protected )
+	o  hk_datasource::clear_depending_fields() has now a parameter bool registerchange
+	o  hk_datasource::set_query(hk_qbe*) added
+	o  functions save_query and load_query moved from class hk_dsgrid to hk_dsquery
+	o  hk_actionquery::set_sql got additional parameter 'convertdelimiter'
+	o  hk_database::set_usewidgetparent type changed from void* to hk_class*
+	o  hk_database and hk_dbvisible: signal list_changes() works also for dbvisible objects now
+	o  hk_database: disable() added (ideally called before delete)
+	o  hk_definitions.h: filetype ft_index removed
+	o  hk_definitions.h: new types defined, objecttype, listtype
+	o  all objects: the previous universal used filetype is now split in filetype, objecttype,listtype
+
+
+
+    o Bugfixes
+	o hk_datasource: If the Sql statement was changed during runtime (e.g. a script in a form or a report)
+	   it will be reset when enabling
+	o hk_datasource: set_depending_on(): did not delete the connection to a previous master datasource, fixed
+	o hk_presentation: unique_datasourcename() does not crash any more if no datasource was found
+	o hk_reportutils: Postscript reports did crop off rows at the bottom of a page in sizetype=absolute mode
+	  , fixed
+	o hk_database inform_datasources_filelist_changes will be sent when a table is deleted
+
+
+
+April 04 MET 2004 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6.3
+    	o the password will be stored in the file .hk_classes/SERVER/driver.conf, the RW-flags are set to the user only
+	o hk_presentation: presentation local datasources can be defined in the datasource dialog
+	o Python script handles uninstall now
+
+    o API changes
+    	o hk_reportdata: beforedata() and afterdata() added.
+	o hk_dsdatavisible: find() added
+	o hk_dsgrid:set_rowheight() added
+	o hk_label: supports border lines now
+	o hk_datasource: insert_row, update_row and delete_row returns  a result yet
+	o hk_datasource: set_internal_filter, internal_filter,set_use_internalfilter,use_internalfilter added
+
+    o Bugfixes
+	o acinclude and hk_classes-Makefile.am has been modified: if --prefix was used the driverpath was set to: $(exec_prefix)/hk_classes.
+	   The variable was not expanded. fixed
+	o hk_database: clears the hk_dbvisible list now, and does not crash any more when a hk_dbvisible object exists
+	o ODBC driver: correct handling of boolean fields
+	o ODBC driver: SAPDB returns unicode field names, will be handled correctly
+	o Postgresql driver: boolean fields work again
+	o an additional \n is added to Python scripts to work with Python 2.2
+	o Python API: hk_dsboolean added, so no bugfix: hk_dsboolean added,
+	   so no "error while loading hk_this=currentboolean()" appears any more
+	o hk_importcsv: will not set empty values in numeric fields any more (and thus create non-valid SQL statements)
+	o hk_connection::create_database, does not crash any more when the used action query could not be created
+	o hk_mysqldatasource: more than 8 digits will be accepted
+
+
+November 16 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6.2
+    	o Python interface updated: hk_datasource filter handling added, indices(), hk_column.has_changed() added
+	o hk_datasource: hk_classes SQL has server independent delimiters now: according to the SQL standard text is delimited in ' (quote) and
+		fields are delimited in " (doublequote) : a valid SQL statement would be then (indepenent from the underlying server)
+		SELECT 'my field' WHERE 'my field'="value"
+	o hk_interpreter: Python sets automatically the variables hk_thisform and hk_thisreport
+
+    o API changes
+    	o hk_column: changed_data_asdouble(),changed_data_asinteger() added
+	o hk_column: curval_asstring(),curval_asbool(),curval_asdouble(),curval_asinteger() added
+	o hk_dsdatavisible: set_value(const hk_string&) and value() added
+
+    o Bugfixes
+     	o acinclude accepts Python 2.3
+	o Mysql and postgresql: Add index corrected name delimiter
+	o Postgres driver: hk_postgresqldatasource::driver_specific_columns now delivers the resulting
+	  columns when the datasource name contains non-ascii characters
+	o hk_database::copy_table loading does not ignore space characters any more. This will have an effect on
+	   copy/Paste of tables
+	o hk_reportdata: float point numbers were rounded always to .0 , fixed
+	o hk_report:p_visibletype set
+	o hk_connection: set_password works again. The driverspecific functions were unable to create a actionquery
+	o hk_datasource::reload_data stores changed data before reloading
+
+
+
+
+October 19 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6.1
+    	o hk_importcsv: recognises boolean field type now
+	o Python support added. hk_classes is now available as a Python module
+	o Forms and reports have scripting support (Python) now
+	o hk_visible  actions added: on_click_action, on_doubleclick_action, on_open_action, on_close_action
+	o hk_dsvisible actions added:before_row_change_action, after_row_change_action, before_update_action,
+	   after_update_action, before_delete_action, after_delete_action, before_insert_action, after_insert_action
+	o hk_report, hk_reportdata: print_data_action,on_new_page_action added
+	o acinclude.m4 changed: if a prefix is set libraries will be now installed in $libdir/hk_classes and header files
+	   in $includedir/hk_classes.
+	o documentation added: hk_classes tutorial and api documentation
+	o table and column names are now delimited,  special characters are allowed now
+
+    o API changes
+       o hk_actionquery::set_sql(const hk_string&) added
+       o hk_presentation: modes 'view' and 'design' renamed to 'viewmode' and 'designmode'
+       o hk_dsmodevisible added ,which is the new parent of hk_presentation
+       o hk_column: set_asdouble, set_asinteger, asinteger, asdouble added
+       o hk_datasource: field names are now within driver specific delimiters
+       o hk_presentation: snap2gridx and snap2gridy added
+       o hk_database: rename_file added
+
+    o Bugfixes
+    	o ODBC driver works with SAPDB now
+	o Forms and Reports are now stored correctly when using the ODBC driver
+	o hk_datasource::add_row and ::update_row memory leak fixed
+    	o hk_report: clears counting fields when executed more than one time
+	o hk_postgresqldatasource: recognizes numeric type
+	o hk_class: show_stringvaluedialog does read whole lines and not just one word
+	o hk_database: new_table,new_resultquery and new_actionquery return NULL if database does not exist
+	o Makefile.am of directory 'python' changed
+	o locale handling: the environment stays at "C" and not to the users locale
+	o hk_class::set_preferences is XML conform now
+	o hk_dsdatavisible loaddata: sets numberformat correctly
+	o hk_datasource: does not crash any more when table structure changes while program is closing
+
+
+ April 28 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.6
+	o hk_font added
+	o linked with the python library
+	o int2hex() added
+	o hk_presentation: set_sizetype added. With this fields in forms can either be set in
+	  pixel size or in percent
+	o hk_connection::emulate_boolean added. E.g. Mysql does not natively support a boolean type, so TINYINT
+	  is used
+	o hk_dsgridcolumn: find() added, so it can also be searched in comboboxes
+
+
+    o API changes
+    	o hk_visible: set_font etc, changed to use hk_font
+	o hk_form: widget_specific_new_grid, widget_specific_new_lineedit,widget_specific_new_boolean,
+	  widget_specific_new_label,widget_specific_new_button,widget_specific_new_rowselector,
+	  widget_specific_new_memo are abstract now
+	o hk_button: bool push_action  is abstract now
+	o hk_datasource: set_depending_on returns bool now
+	o all drivers: return version number now
+
+    o Bugfixes
+        o replace_all does not to replace empty strings any more
+	o hk_presentation: does not clear the datasource list before saving
+	o Queries including a "<" (lesser than) are stored correctly now
+	o hk_font: fontname when loading is set correctly now
+	o hk_reportutils: Postscript shows page footer now
+	o hk_datasource: parsing of subselects with "WHERE" statements corrected
+	o hk_datasource, hk_column: apostrophs for numbers in sql statements
+	  removed (thanks to Erik Norvelle)
+
+
+
+
+
+
+ January 19 MET 2003 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.6
+	o hk_reportsection: offset added (additional space at the end of the section)
+	o hk_button: can open and print reports depending on form datasources
+	o hk_column: new columntype 'timestampcolumn' added
+	o class hk_colour added
+	o colour management added to hk_visible
+	o hk_presentation: method bulk_operations added to allow a central change of font,foreground and
+	  background colour to all widgets of a presentation.
+	o hk_visible: raise_widget and lower_widget added
+	o hk_datetime: most operators (>,<,<< etc)overridden
+	o command line utilities added: hk_report, hk_actionquery,hk_exportcsv, hk_exportxml, hk_importcsv
+
+    o API changes
+	o hk_class, hk_drivermanager, hk_connection: enum_interaction added: classes that previously an boolean
+	  parameter have changed to this enum (defined in hk_class)
+
+    o Bugfixes
+	o hk_dsgrid.cpp: memory leak fixed in clear_cols()
+	o all drivers: catches memory allocation errors
+	o hk_datetime: now parses date and time strings correctly which don't have a separator:
+	  e.g. '20020101' for the first of January 2002
+	o hk_importcsv: works with csv-files that don't have column names in the first row
+	o hk_importcsv: new parser, should work without any problems now
+	o hk_exportcsv: handles textdelimiters correctly now
+	o hk_datasource/hk_dscombobox in combination with postgresql: combobox does react on changes
+	  correctly now
+
+
+
+
+
+
+ November 22 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.5
+        o defaultfont can be selected now
+	o defaultdriver can be selected now
+	o defaultnumberformat can be set now
+	o defaultalignment can be set now
+	o hk_column:: set_asstring allows "TRUE" and "FALSE" for boolean columns now and asstring_at returns "TRUE" and "FALSE" now
+	o ODBC driver added: works with both UnixODBC and IODBC
+
+
+    o API changes
+        o hk_column: NULL value handling added: is_nullvalue,is_nullvalue_at, set_asnullvalue
+	o set_alignment ,alignment: moved from hk_dsdatavisible to hk_visible
+	o hk_visible: open_maximized_window added. If true and the object is a standalone window it will be shown maximized
+	o hk_connection: default_tcp_port added
+	o hk_connection: "int server_needs" replaced with "bool server_needs(need_enum)"
+			 and "int server_supports" replaced with "bool server_supports(support_enum)"
+	o hk_visible: p_font, p_fontsize made private now
+	o hk_presentation: set_automatic_enable_datasources added
+	o hk_datasource: set_accessmode() added 3 possibilities: standard, batchread, batchwrite
+	o hk_reportsectionpair: set_ascending_order added
+	o hk_class get_tagvalue and set_tagvalue for type "int" added
+	o hk_datasource: column_by_name(const hk_string& c, int colnumber) added
+	o hk_datasource: goto_row,update_row,insert_row,delete_row are virtual now
+	o hk_datasource: columnname_occurances(const hk_string&) and  columnname_occurance(hk_column*) added
+	o hk_report, hk_reportsection: all "default" functions like set_default_data renamed to set_defaultreportdata
+	  to avoid naming problems with the with this release introduced default functions
+
+    o Bugfixes
+    	o hk_datasource: if it is a depending datasource and read_only it will send a "disable" signal to visible
+	  objects if datasource is empty
+	o hk_datasource: does not crash any more when a group by query will be added with a oder by statement
+	o hk_connection: databaselist is sorted now
+	o memory leak fixed in the postgres driver, all memory allocation changed to the new/delete mechanism
+	o Mysql driver adds the table name to the columnname if there exists already another column with this name
+	o hk_reportutils.cpp: recode_postscript encodes brackets correctly now (thanks to Brian Harris)
+	o hk_reportutils.cpp: landscape works not just for the first page now
+	o hk_report.cpp: creates correct landscape/portrait meta information for postscript now
+	o hk_report.cpp: empty pages at the end will not be printed any more and new_page_after_section works now for
+	  reportheaders
+	o hk_report.cpp: correct handling of userdefined papersizes
+	o hk_dsgrid.cpp: memory leak fixed in clear_cols()
+
+
+
+
+
+
+ September 22 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.4
+    o Postgres driver added. Use Postgres version 7.1 or higher
+
+    o API changes
+    	o hk_datasource: before_source_vanishes is now protected (not private)
+	o hk_datasource: driver_specific_before_drop_table added
+	o hk_datasource: set_temporaryfilter, set_temporarysorting added
+    	o hk_string.h: functions localestring2int and localestring2uint added
+    	o hk_class: all set_tagvalue members have been changed to accept ostream instead of ofstream
+    	o all classes: savedata members have changed to accept ostream instead of ofstream
+    	o hk_datasource, hk_column: save_datasourcedefinition, load_datasourcedefinition, load_columndefinition,
+    	  save_columndefinition added which allow to store and load the table structure in the xml-format and
+    	  so in a database driver independent way.
+	o hk_database: fileendings() made public
+	o hk_database: convenience functions of  savestream added
+	o hk_database::copy_table added
+	o hk_dsdatavisible:: value_at() added, which delivers the formatted string of a column
+	o hk_column: convenience function set_asstring(const hk_string&) added
+	o hk_column: hk_datasource* datasource(void) added
+	o hk_column: set_asblob, asblob renamed to set_asbinary, asbinary
+	o hk_column: set_allow_autoincwrite added
+	o hk_connection: hk_drivermanager* drivermanager(void) added
+	o hk_connection: database_exists() added
+	o hk_connection: copy_database() added
+	o hk_drivermanager: find_existing_connection added
+
+    o Bugfixes
+   	o hk_dsdatavisible defaultvalue: it is possible now to have empty defaultvalues for numbers
+	o fixed memory leak in hk_mysqltable
+	o the autoconf system checks now whether to include <iostream> or <iostream.h>
+	o hk_column: delivers changed_data_asstring correctly formatted now if value is of type integer
+	o hk_dscombobox: numbers are displayed formatted now even if no list- or viewcolumn is defined
+	o hk_report: values in the page footer section on the last page weren't printed, fixed
+	o hk_datasource: crashed while inform_visible_objects_new_columns_created() fixed
+	o hk_datasource: memory leak fixed insert_row and update row calculates needed space correctly now
+	o hk_mysqltable: create_table works now with gcc-3.2
+
+
+
+
+
+
+ June 16 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.3
+    o configure script updated: parameters added
+       --with-mysql-dir
+       --with-mysql-incdir
+       --with-mysql-libdir
+       --with-hk_classes-incdir
+    o new default installation directories to follow the Filesystem Hierarchy Standard
+       the libraries will be installed in     /usr/lib/hk_classes
+       the header files will be installed in  /usr/include/hk_classes
+    o hk_dsgridcolumn handles row selection now
+
+    o API changes
+        o hk_visible returns presentation() now
+	o hk_dsgridcolumn handles combobox value correct now
+	o hk_dsdatavisible supports number formatting now (set_numberformat,use_numberseparator,commadigits)
+	o hk_column supports localized numberstrings now, the functions asstring, set_asstring etc have an
+	  additional paramater 'bool is_locale' now
+	o the string functions "replace_all" and "format_number and its derivates are moved from hk_definitions.h
+	  to hk_string.h
+	o alignmenttype has been removed from hk_definitions.h and added to hk_dsdatavisible.h
+	o hk_column::sql_column_delimiter removed
+	o hk_drivermanager: new parameter 'interactive' added to function new_connection
+	o hk_class::setlocale() and hk_class::locale() added
+
+    o Bugfixes
+    	o hk_reportutils: postscript works now better with cups
+	o hk_reportutils: postscript sections were measured wrong (too much space between sections), fixed
+	o hk_drivermanager: loads preferences correctly now (conversion from UTF8 did not work as one
+	  undefined character had to be converted)
+	o hk_datasource: parses GROUP BY statements correctly now
+	o hk_datasource: depending datasources in sublevels change also now
+	o hk_dsvisible: has readonly flag now (set_readonly(), is_readonly())
+	o hk_datasource: readonly state will be stored now
+	o hk_datasource: delimiter for depending on fields changed from " to '
+	o hk_column: handles bool values correctly now if the field type is numeric
+
+
+
+
+
+ May 21 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.2
+
+    o hk_class,hk_drivermanager: the hk_classesdriverpath can be stored and changed now
+    o hk_dsgridcolumn: type columncombo added
+    o hk_datasource: insertrow only write fields with changed values now
+
+    o API changes
+    	o hk_database::set_name return value now of type bool
+	o hk_dsgrid load_table,save_table added
+	o hk_dsgridcolumn::value_at added
+	o hk_datasource: convenience function set_enabled(bool) added
+
+    o Bugfixes
+    	o hk_presentation: round differences in relativ2horizontal/vertical removed
+	o hk_presentation: datasources will be saved now when database will be destroyed
+	o hk_report: sections will be stored in the correct order now
+   	o hk_database: Queries within presentation weren't transformed from utf8 to local charset
+	  fixed
+	o hk_datasource: will not crash any more when the database will be deleted before changed
+	  data is written
+	o hk_datasource: if depending on datasource is in insertmode then depending datasource::enable()
+	  does not enable any more
+	o hk_storagedatasource: will not crash any more if a non-existing datasource is deleted
+	o hk_dscombobox: will not crash forms when storing
+	o hk_column/hk_connection: will not crash any more when data is written while disconnecting
+	o hk_mysqldatasource: timestamp columns didn't show the values, fixed (is now shown as fieldtype: "other")
+
+
+ March 17 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5.1
+    	o Forms, reports and queries are stored in UTF-8 now
+	o XML Export added
+    o API changes
+    	o hk_drivermanager constructor has no default value any more.
+	o hk_string charset conversion routines added
+	o hk_connection::show_passworddialog is public now
+	o hk_connection::dblist and hk_connection::driver_specific_dblist returns
+	  a non-const vector list now
+	o the protected hk_connection::p_databaselist isn't a pointer any more
+	o the protected hk_database::p_tablelist isn't a pointer any more
+
+    o Bugfixes
+       	o automatic storage of changed data when disabling improved
+	o CSV importfilter crashed when a data line has less data than expected, fixed
+	o CSV importfilter crashed when table has to be deleted before filled, fixed
+	o export filter did some strange number formatting, fixed
+	o hk_datasource: if filter is set, but no sql statement it crashed, fixed
+	o hk_datasource: if rowsize=0 and in insertmode gets a storechanged data, it will stay now in
+	  insertmode
+	o hk_dsgrid: no crash any more if a form is saved with a grid that has no datasource set
+	o all hk_dsvisible derived objects objects: fixed some potential crashes when datasource() returns NULL
+	o fixed a small memory leak in hk_database::load
+
+    o Misc
+    	o Mysql driver supports the mysql_real_escape_string function, if existing,
+	 localhost so Mysql databases get a better localisation
+        o The installation process has better information now, when no database driver could be compiled
+
+
+
+
+ February 12 MET 2002 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.5
+    o hk_report changes
+    	o dynamic reporttype
+	o fontencoding added, stored together with the hk_classes preferences
+	o reportheader and reportfooter added
+
+    o API changes
+	o hk_report, hk_reportsection, hk_reportdata: actual_hk_string renamed to actual_string
+	o hk_report: page_head renamed to page_header, page_foot renamed to page_footer
+	o hk_reportpostscript removed, use hk_report in combination with method "set_reporttype(Postscript)" now
+	o hk_reportutils.cpp: hk_reportcvs renamed to correct name hk_reportcsv
+	o hk_datasource: set_blockvisiblesignals, set_blockdatasourcesignals,set_blockserversignals added
+	o hk_datasource, hk_mysqldatasource: set_newpassword added to change passwords.
+
+    o bugfixes
+    	o hk_datetime handles time "12:00:00" correctly now
+	o hk_datasource SQL statements with "WHERE" statements are handled correctly now
+	o replace_all: non recursive replacement works now correctly
+	o hk_class: set_tagvalue and get_tagvalue now more XML conform: replaces '<' with '&lt;'
+	  and '&' with '&amp;'
+	o hk_report && hk_reportsection: memory leak fixed: sections and data will be deleted now,
+	  when the report is destroyed
+	o hk_presentation: loading of multiple datasources works correctly now
+	o hk_connection: bug in storage path (~./hk_classes/driver/host/database ) fixed
+	o hk_column: changed_asstring date/time was not displayed correctly
+	o hk_importcsv: no crash any more when there is a textdelimiter within the data
+
+    o Misc
+    	o hk_datasource: unneccessary code removed (p_oldcolumns)
+	o acinclude bugfix: if mysql is not on the computer libmysql will not be linked any more
+	o mysql driver: prints server error messages to cerr.
+	o XML output formatted
+
+
+
+ October 09 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.3
+    o resultqueries should use for boolean values %TRUE% and %FALSE% now to be independent from the
+      database driver (Mysql for instance does not have boolean fields, it has to be imitated by hk_classes)
+    o hk_class and hk_drivermanager: runtime option added, when set no manipulation of table,
+      query and form structures is possible.
+    o hk_dsdatavisible:default values %NOW%, %NOWDATE% and %NOWTIME% added
+    o hk_datetime:  set_now function  added
+    o bugfixes
+       	  o no double mentioned datasources in forms any more
+	  o hk_csvimport.cpp: empty fields are really empty now
+	  o hk_column & hk_csvimport: space characters in columnnames are
+	    replaced now with "_"
+	  o hk_mysqltable create table with column without name will not hang any more
+	  o hk_datasource: re-setting depending_on datasources works now
+	  o hk_datasource: deleting rows was rejected under certain circumstances, fixed
+
+
+ August 03 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.2
+    o API changes
+       o default values in forms now possible
+       o defaults for date and time format can be stored now
+       o hk_dsdatavisible::set_column renamed to hk_dsdatavisible::set_columnname
+       o hk_reportbase removed
+       o hk_report  reparented to hk_presentation
+       o hk_reportsection and hk_reportdata reparented to hk_dsdatavisible
+       o hk_visible changed. date and time format functions added
+
+
+ August 02 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.1.a
+    o csvexport bugfix
+
+
+ July 07 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4.1
+    o hk_dsgrid: gridcolumn management changed and improved.
+    o hk_mysqlclasses is part of hk_classes now, so it is not necessary to install a separate driver
+    o hk_classes class renamed in hk_drivermanager
+    o hk_column API changed internally ( driver_specific_asstring removed)
+    o hk_datasource: transaction support added
+    o hk_datasource: depending datasources with different modes to get a kind of referential integrity
+    o hk_datasource: depending datasources can optionally react on changed (but not stored) master data
+    o combobox API changed
+    o combobox support in forms
+    o bugfix in hk_column::find, hk_dsdatavisible::column
+
+ June 21 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.4
+    o API updated, function names get more logic (hopefully)
+    o form support added
+    o bugfixes
+
+ April 08 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.3.1
+    o fixed the compilation problems
+
+
+ April 04 MET 2001 - Horst Knorr <hk_classes@knoda.org>
+    o V 0.3
+    o first public release

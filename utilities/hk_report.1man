@@ -1,0 +1,53 @@
+.TH hk_report "1" "hk_classes package"  "" "http://hk-classes.sourceforge.net"
+.SH NAME
+hk_report \- prints a report to stdout.
+hk_report is part of the hk_classes package
+
+.SH SYNOPSIS
+.B hk_report -d driver -b database [OPTIONS] report
+
+.SH DESCRIPTION
+.B hk_report
+prints a report to stdout. To create a report use
+.B knoda (http://www.knoda.org).
+
+.SH OPTIONS
+.IP  "-b, --database=DATABASE"
+database name
+.IP  "-d, --driver=DRIVERNAME"
+set the SQL-driver (e.g. mysql). You can get a list of all existing SQL-drivers with
+.BR -l
+or
+.BR --list
+
+.IP "-f, --filter=FILTER"
+filter of the datasource. It has the same syntax as the WHERE clause of a SQL
+statement, just without the 'WHERE'.
+.BR Example:
+"author_id = 5"
+
+.IP "-h, --host=HOST"
+name  or IP-number of the host
+.IP  "-l, --list"
+List available database drivers
+.IP  "-p, --password=PASSWORD"
+user password at the SQL server
+.IP  "-r, --port=PORT"
+TCP-port on host
+.IP  "-u, --user=USERNAME"
+user name at the sql-server
+.IP "--version"
+version and author of hk_classes
+.SH DIAGNOSTICS
+hk_report returns 0 if everything was ok, or 1 if an error occured. A clear text error message
+will be written to stderr.
+
+.SH AUTHOR
+Horst Knorr <hk_classes@knoda.org>
+.http://hk-classes.sourceforge.net
+
+.SH SEE ALSO
+.BR hk_actionquery (1),
+.BR hk_exportcsv (1),
+.BR hk_exportxml (1),
+.BR hk_importcsv (1)

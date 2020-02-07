@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>The hk_classes programmer's tutorial</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="NEXT"
+TITLE="Get in contact with your SQL Server"
+HREF="chapter1.html"><META
+NAME="KEYWORD"
+CONTENT="hk_classes"><META
+HTTP-EQUIV="Content-Style-Type"
+CONTENT="text/css"><LINK
+REL="stylesheet"
+HREF="common/kde-common.css"
+TYPE="text/css"><META
+HTTP-EQUIV="Content-Type"
+CONTENT="text/html; charset=iso-8859-1"><META
+HTTP-EQUIV="Content-Language"
+CONTENT="en"><LINK
+REL="stylesheet"
+HREF="common/kde-localised.css"
+TYPE="text/css"
+TITLE="KDE-English"><LINK
+REL="stylesheet"
+HREF="common/kde-default.css"
+TYPE="text/css"
+TITLE="KDE-Default"><META
+NAME="KEYWORDS"
+CONTENT="hk_classes"></HEAD
+><BODY
+CLASS="BOOK"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#AA0000"
+VLINK="#AA0055"
+ALINK="#AA0000"
+STYLE="font-family: sans-serif;"
+><DIV
+CLASS="logoheader"
+><A
+HREF="http://www.kde.org/"
+></A
+></DIV
+><DIV
+CLASS="BOOK"
+><A
+NAME="HK_CLASSES"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>The hk_classes programmer's tutorial</A
+></H1
+>Version <SPAN
+CLASS="RELEASEINFO"
+>Version 0.1.2<BR></SPAN
+>Last updated: <SPAN
+CLASS="DATE"
+>01/05/2003<BR></SPAN
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN5"
+> Horst Knorr</A
+></H3
+><DIV
+CLASS="AFFILIATION"
+><DIV
+CLASS="ADDRESS"
+><P
+CLASS="ADDRESS"
+><TT
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:hk_classes@knoda.org"
+>hk_classes@knoda.org</A
+>&#62;</TT
+></P
+></DIV
+></DIV
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN12"
+> Peter Ruskin</A
+></H3
+><DIV
+CLASS="AFFILIATION"
+><DIV
+CLASS="ADDRESS"
+><P
+CLASS="ADDRESS"
+><TT
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:aoyu93@dsl.pipex.com"
+>aoyu93@dsl.pipex.com</A
+>&#62;</TT
+></P
+></DIV
+></DIV
+><DIV
+><DIV
+CLASS="ABSTRACT"
+><A
+NAME="AEN21"
+></A
+><P
+>This is a short, quick and dirty tutorial to make it easier to write programs with hk_classes. For further information see the programmer's class documentation.
+To compile the sourcecode of example.cpp use
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+> g++ -o example example.cpp -lstdc++ -ldl -lhk_classes -L/usr/lib/hk_classes/ -I /usr/include/hk_classes/</PRE
+></TD
+></TR
+></TABLE
+>
+All examples refer to the literature example database descriped in the knodatutorial.You should first create the
+database (best use knoda for this).</P
+><P
+>	</P
+></DIV
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="chapter1.html"
+>Get in contact with your SQL Server</A
+></DT
+><DT
+>2. <A
+HREF="chapter2.html"
+>Get in contact with a table</A
+></DT
+><DT
+>3. <A
+HREF="chapter3.html"
+>Preselect the driver and user information</A
+></DT
+><DT
+>4. <A
+HREF="chapter4.html"
+>Show data of a column</A
+></DT
+><DT
+>5. <A
+HREF="chapter5.html"
+>Alter data of a column</A
+></DT
+><DT
+>6. <A
+HREF="chapter6.html"
+>Add a row</A
+></DT
+><DT
+>7. <A
+HREF="chapter7.html"
+>Delete a row</A
+></DT
+><DT
+>8. <A
+HREF="chapter8.html"
+>Searching a column</A
+></DT
+><DT
+>9. <A
+HREF="chapter9.html"
+>Use a query</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="LOT"
+><DL
+CLASS="LOT"
+><DT
+><B
+>List of Examples</B
+></DT
+><DT
+>1-1. <A
+HREF="chapter1.html#AEN30"
+>Get in contact with your SQL Server</A
+></DT
+><DT
+>2-1. <A
+HREF="chapter2.html#AEN42"
+>Get in contact with a table</A
+></DT
+><DT
+>3-1. <A
+HREF="chapter3.html#AEN56"
+>Preselect the driver and user information</A
+></DT
+><DT
+>4-1. <A
+HREF="chapter4.html#AEN79"
+>Show data of a column</A
+></DT
+><DT
+>5-1. <A
+HREF="chapter5.html#AEN91"
+>Alter data of a column</A
+></DT
+><DT
+>6-1. <A
+HREF="chapter6.html#AEN101"
+>Add a row</A
+></DT
+><DT
+>7-1. <A
+HREF="chapter7.html#AEN111"
+>Delete a row</A
+></DT
+><DT
+>8-1. <A
+HREF="chapter8.html#AEN122"
+>Searching a column</A
+></DT
+><DT
+>9-1. <A
+HREF="chapter9.html#AEN129"
+>Use a query</A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="chapter1.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Get in contact with your SQL Server</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
