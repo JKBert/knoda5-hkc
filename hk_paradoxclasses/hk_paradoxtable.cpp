@@ -16,6 +16,7 @@
 #include "hk_paradoxconnection.h"
 #include "hk_paradoxdatabase.h"
 #include "hk_url.h"
+#include <string.h>
 //#include <pxversion.h>
 
 hk_paradoxtable::hk_paradoxtable(hk_paradoxdatabase* db,hk_presentation* p):hk_paradoxdatasource(db,p)

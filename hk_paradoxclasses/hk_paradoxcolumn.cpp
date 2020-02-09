@@ -10,7 +10,7 @@
 // ****************************************************************************
 #include "hk_paradoxcolumn.h"
 #include "hk_paradoxdatasource.h"
-
+#include <string.h>
 
 hk_paradoxcolumn::hk_paradoxcolumn(hk_paradoxdatasource* ds, const hk_string& tTRUE,const hk_string& tFALSE)
 :hk_storagecolumn(ds,tTRUE,tFALSE)

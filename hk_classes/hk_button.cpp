@@ -17,6 +17,8 @@
 #include "hk_actionquery.h"
 #include "hk_interpreter.h"
 
+#include <string.h>
+
 
 
 class hk_buttonprivate

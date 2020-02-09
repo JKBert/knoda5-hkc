@@ -17,6 +17,7 @@
 
 #include <mysql.h>
 #include <errmsg.h>
+#include <string.h>
 
 hk_mysqlcolumn::hk_mysqlcolumn(hk_mysqldatasource* ds, const hk_string& tTRUE,const hk_string& tFALSE)
 :hk_storagecolumn(ds,tTRUE,tFALSE)

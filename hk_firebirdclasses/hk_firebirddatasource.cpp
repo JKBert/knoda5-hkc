@@ -17,6 +17,7 @@
 #include <time.h>
 #include <exception>
 #include <new>
+#include <string.h>
 
 #define MAXLEN 1024
 

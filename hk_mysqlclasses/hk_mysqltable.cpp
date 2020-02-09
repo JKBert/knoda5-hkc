@@ -12,6 +12,8 @@
 #include "hk_mysqltable.h"
 #include "hk_mysqldatabase.h"
 #include "hk_actionquery.h"
+#include <string.h>
+
 hk_mysqltable::hk_mysqltable(hk_mysqldatabase* db,hk_presentation* p):hk_mysqldatasource(db,p)
 
 {

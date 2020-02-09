@@ -14,6 +14,7 @@
 #include "hk_dsdatavisible.h"
 #include "hk_datetime.h"
 #include <stdio.h>
+#include <string.h>
 
 hk_column::hk_column(hk_datasource* ds, const hk_string& lTRUE,const hk_string& lFALSE)
 {

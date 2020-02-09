@@ -12,6 +12,8 @@
 #include "hk_postgresqlcolumn.h"
 #include "hk_postgresqldatasource.h"
 #include "hk_postgresqldatabase.h"
+#include <string.h>
+
 hk_postgresqlcolumn::hk_postgresqlcolumn(hk_postgresqldatasource* ds, const hk_string& tTRUE,const hk_string& tFALSE)
 :hk_storagecolumn(ds,tTRUE,tFALSE)
 {

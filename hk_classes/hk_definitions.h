@@ -82,7 +82,7 @@ reports</li>
 using namespace std;
 
 #define  HK_DEBUG
-#define HK_VERSION "082"
+#define HK_VERSION "084"
 /*
 ** The HK_VERSION_NUMBER is an integer with the value
 ** (X*100000 + Y*1000 + Z). For example, for version "3.1.2",
@@ -93,7 +93,7 @@ using namespace std;
 #ifdef HK_VERSION_NUMBER
 # undef HK_VERSION_NUMBER
 #endif
-#define HK_VERSION_NUMBER 0008002
+#define HK_VERSION_NUMBER 0008004
 
 
 #ifdef HAVE_NO_SSTREAM

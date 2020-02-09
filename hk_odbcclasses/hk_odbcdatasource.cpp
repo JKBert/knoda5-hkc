@@ -17,6 +17,7 @@
 #include <sqlext.h>
 #include <exception>
 #include <new>
+#include <string.h>
 
 hk_odbcdatasource::hk_odbcdatasource(hk_odbcdatabase* d,hk_presentation* p):hk_storagedatasource(d,p)
 {

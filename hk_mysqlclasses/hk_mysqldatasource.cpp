@@ -15,6 +15,7 @@
 #include "hk_mysqlactionquery.h"
 #include <exception>
 #include <new>
+#include <string.h>
 
 hk_mysqldatasource::hk_mysqldatasource(hk_mysqldatabase* d,hk_presentation* p):hk_storagedatasource(d,p)
 {

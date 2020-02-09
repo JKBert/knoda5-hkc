@@ -11,7 +11,7 @@
 #include "hk_dsimage.h"
 #include "hk_form.h"
 #include "hk_url.h"
-
+#include <string.h>
 
 hk_dsimage::imagetypelisttype  hk_dsimage::p_imagetypefunctions;
 

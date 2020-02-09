@@ -16,6 +16,7 @@
 #include <hk_column.h>
 #include <exception>
 #include <new>
+#include <string.h>
 
 hk_postgresqldatasource::hk_postgresqldatasource(hk_postgresqldatabase* d,hk_presentation* p):hk_storagedatasource(d,p)
 {

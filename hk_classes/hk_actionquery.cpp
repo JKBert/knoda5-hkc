@@ -13,6 +13,7 @@
 #include "hk_database.h"
 
 #include <time.h>
+#include <string.h>
 
 class hk_actionqueryprivate
 {

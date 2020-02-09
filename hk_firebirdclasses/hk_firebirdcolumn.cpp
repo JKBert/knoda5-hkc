@@ -10,6 +10,7 @@
 // ****************************************************************************
 #include "hk_firebirdcolumn.h"
 #include "hk_firebirddatasource.h"
+#include <string.h>
 
 
 hk_firebirdcolumn::hk_firebirdcolumn(hk_firebirddatasource* ds, const hk_string& tTRUE,const hk_string& tFALSE)

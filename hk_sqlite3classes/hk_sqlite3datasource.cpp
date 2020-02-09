@@ -16,6 +16,7 @@
 #include <sqlite3.h>
 #include <exception>
 #include <new>
+#include <string.h>
 
 hk_sqlite3datasource::hk_sqlite3datasource(hk_sqlite3database* d,hk_presentation* p):hk_storagedatasource(d,p)
 {

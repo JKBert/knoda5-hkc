@@ -17,6 +17,7 @@
 #endif
 
 #include <sqlite3.h>
+#include <string.h>
 
 hk_sqlite3column::hk_sqlite3column(hk_sqlite3datasource* ds, const hk_string& tTRUE,const hk_string& tFALSE)
 :hk_storagecolumn(ds,tTRUE,tFALSE)

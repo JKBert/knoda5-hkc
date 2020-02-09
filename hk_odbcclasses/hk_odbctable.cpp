@@ -15,6 +15,7 @@
 #include "hk_actionquery.h"
 #include <sqltypes.h>
 #include <sqlext.h>
+#include <string.h>
 
 hk_odbctable::hk_odbctable(hk_odbcdatabase* db,hk_presentation* p):hk_odbcdatasource(db,p)
 

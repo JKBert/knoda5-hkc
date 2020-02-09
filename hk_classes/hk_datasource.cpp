@@ -21,6 +21,7 @@
 #include <list>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 
  voidfunction* hk_datasource::p_enablefunction=NULL;

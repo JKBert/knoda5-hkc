@@ -9,6 +9,7 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 // ****************************************************************************
 #include "hk_storagedatasource.h"
+#include <string.h>
 
 hk_storagedatasource::hk_storagedatasource(hk_database* d,hk_presentation* p):hk_datasource(d,p)
 {

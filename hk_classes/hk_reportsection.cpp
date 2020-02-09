@@ -18,6 +18,7 @@
 #include "hk_database.h"
 #include "hk_column.h"
 #include "hk_datasource.h"
+#include <string.h>
 
 const  double teiler=10000.0;
 

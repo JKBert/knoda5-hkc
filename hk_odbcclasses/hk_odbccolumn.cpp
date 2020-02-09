@@ -16,6 +16,7 @@
 #endif
 
 #include <sql.h>
+#include <string.h>
 //#include <errmsg.h>
 
 hk_odbccolumn::hk_odbccolumn(hk_odbcdatasource* ds, const hk_string& tTRUE,const hk_string& tFALSE)
