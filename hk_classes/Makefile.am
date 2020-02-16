@@ -1,7 +1,7 @@
 libdir=@HK_CLASSESDIR@
 includedir=@HK_CLASSESINCDIR@
 
-libhk_classes_la_LDFLAGS = -version-info 15:0:0 -lfontconfig @LTLIBICONV@
+libhk_classes_la_LDFLAGS = -version-info 15:1:0 -lfontconfig @LTLIBICONV@
 AM_CXXFLAGS= -Wall  @PYTHON_CPPFLAGS@  -fPIC -I@XMLINCLUDE@ -I@FONTCONFIGINCDIR@ @FREETYPEINC@ @BITARCHITECTURE@
 
 SUBDIRS = .

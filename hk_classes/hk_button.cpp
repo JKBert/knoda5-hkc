@@ -1,5 +1,6 @@
 // ****************************************************************************
 // copyright (c) 2000-2005 Horst Knorr <hk_classes@knoda.org>
+// copyright (c) 2020 Patrik Hanak <hanakp@users.sourceforge.net>
 // This file is part of the hk_classes library.
 // This file may be distributed and/or modified under the terms of the
 // GNU Library Public License version 2 as published by the Free Software
@@ -19,7 +20,46 @@
 
 #include <string.h>
 
-
+namespace {
+	
+enum Actions { ID_ACTION_NONE = -1, 
+	ID_FORM_OPEN,
+	ID_FORM_CLOSE,
+	ID_TABLE_OPEN, 
+	ID_QUERY_OPEN, 
+    ID_REPORT_PREVIEW,
+    ID_REPORT_PRINT,
+    ID_ROW_GO_FIRST,
+    ID_ROW_GO_LAST,
+    ID_ROW_GO_NEXT,
+    ID_ROW_GO_PREV,
+    ID_ROW_INSERT,
+    ID_ROW_DELETE,
+    ID_ROW_STORE,
+    ID_QUERY_EXEC,
+    ID_APP_CLOSE,
+    ID_VIEW_OPEN,
+    ID_LAST }; // ID_LAST is used as upper border for iteration. Add new actions before ID_LAST
+    
+const char* actionItems[] = {  
+    "open_form", //0
+    "close_form",
+    "open_table",
+    "open_query",
+    "preview_report", 
+    "print_report", //5
+    "goto_firstrow",
+    "goto_lastrow",
+    "goto_nextrow",
+    "goto_previousrow",
+    "insert_row", //10
+    "delete_row",
+    "store_row",
+    "action_query",
+    "close_application",
+    "open_view" //15
+    };
+}
 
 class hk_buttonprivate
 {
@@ -64,30 +104,14 @@ class hk_buttonmodeprivate
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-hk_button::hk_button(hk_form* frm):hk_dsvisible(frm)
+hk_button::hk_button(hk_form* frm):hk_dsvisible(frm), p_action(ID_ACTION_NONE),
+    p_showmaximized(false), p_database(NULL), p_designdata(new hk_buttonmodeprivate),
+    p_viewdata(new hk_buttonmodeprivate), p_private(new hk_buttonprivate)
 {
 #ifdef HK_DEBUG
     hkdebug("hk_button::hk_button");
 #endif
-    p_private=new hk_buttonprivate;
-    p_viewdata=new hk_buttonmodeprivate;
-    p_designdata=new hk_buttonmodeprivate;
     p_visibletype=button;
-    p_database=NULL;
-    p_action=-1;
-    p_showmaximized=false;
 }
 
 
@@ -111,74 +135,62 @@ bool    hk_button::push_action(void)
 // now handle other actions
     if (p_presentation==NULL) return false;
     if (p_presentation->mode()==hk_presentation::designmode) return false;
-    if (action()>5 &&!datasource() && action()!=14)
+    if (action()>=ID_ROW_GO_FIRST && action()<=ID_QUERY_EXEC && !datasource() )
     {
         show_warningmessage(hk_translate("No datasource set!"));
         return false;
     }
     switch (action())
     {
-        case 0   : return widget_specific_open_form();
-        case 1   : return widget_specific_close_form();
-        case 2   : return widget_specific_open_table();
-        case 3   : return widget_specific_open_query();
-        case 4   : return widget_specific_preview_report();
-        case 5   : return widget_specific_print_report();
-
-        case 6   : if (datasource()!=NULL)return datasource()->goto_first();else break;
-        case 7   : if (datasource()!=NULL)return datasource()->goto_last();else break;
-        case 8   : if (datasource()!=NULL)return datasource()->goto_next();else break;
-        case 9   : if (datasource()!=NULL)return datasource()->goto_previous();else break;
-        case 10  : if (datasource()!=NULL)
-        {
+        case ID_FORM_OPEN : return widget_specific_open_form();
+        case ID_FORM_CLOSE : return widget_specific_close_form();
+        case ID_TABLE_OPEN : return widget_specific_open_table();
+        case ID_QUERY_OPEN : return widget_specific_open_query();
+        case ID_REPORT_PREVIEW : return widget_specific_preview_report();
+        case ID_REPORT_PRINT : return widget_specific_print_report();
+        case ID_ROW_GO_FIRST : return datasource()->goto_first();
+        case ID_ROW_GO_LAST  : return datasource()->goto_last();
+        case ID_ROW_GO_NEXT  : return datasource()->goto_next();
+        case ID_ROW_GO_PREV  : return datasource()->goto_previous();
+        case ID_ROW_INSERT  : 
             datasource()->setmode_insertrow();
             return true;
-        }
-        else break;
-        case 11  : if (datasource()!=NULL)
-        {
-            datasource()->delete_actualrow();
-            return true;
-        }
-        else break;
-        case 12  : if (datasource()!=NULL)
-        {
-            datasource()->store_changed_data();
-            return true;
-        }
-        else break;
-        case 13  : if (datasource()!=NULL)
-        {
-            hk_actionquery* a= datasource()->database()->new_actionquery();
-            if (a)
+        case ID_ROW_DELETE  :
             {
-                xmlNodePtr result=datasource()->database()->xmlload(p_object,ft_query);
-                hk_string querystring;
-                hk_string sql;
-                result=get_tagvalue(result,"DATASOURCE",querystring);
-                get_tagvalue(result,"SQL",sql);
-
-                a->set_sql(sql.c_str(),sql.size());
-                bool res= a->execute();
-                delete a;
-                if (res)return true;
-
+                datasource()->delete_actualrow();
+                return true;
             }
-            show_warningmessage(hk_translate("Error while executing actionquery"));
-            return false;
-        }
-        else break;
-	case 14  :      return widget_specific_close_application();
-			break;
-	case 15  :      return widget_specific_open_view();
-			break;
+        case ID_ROW_STORE  : 
+            {
+                datasource()->store_changed_data();
+                return true;
+            }  
+        case ID_QUERY_EXEC  :
+            {
+                hk_actionquery* a= datasource()->database()->new_actionquery();
+                if (a)
+                {
+                    xmlNodePtr result=datasource()->database()->xmlload(p_object,ft_query);
+                    hk_string querystring;
+                    hk_string sql;
+                    result=get_tagvalue(result,"DATASOURCE",querystring);
+                    get_tagvalue(result,"SQL",sql);
+
+                    a->set_sql(sql.c_str(),sql.size());
+                    bool res= a->execute();
+                    delete a;
+                    if (res)return true;
+                }
+                show_warningmessage(hk_translate("Error while executing actionquery"));
+                return false;
+		    }
+	    case ID_APP_CLOSE :  return widget_specific_close_application();
+	    case ID_VIEW_OPEN :  return widget_specific_open_view();
 
         default  :;
-
     }
 
     return false;
-
 }
 
 
@@ -188,41 +200,15 @@ void hk_button::set_action(const hk_string& actionstring,const hk_string& object
     hkdebug("hk_button::set_action ",actionstring);
     hkdebug("object: ",objectname);
 #endif
-    long int a=-1;
-    if (actionstring=="open_form") a=0;
-    else
-    if (actionstring=="close_form") a=1;
-        else
-        if (actionstring=="open_table") a=2;
-            else
-            if (actionstring=="open_query") a=3;
-                else
-                if (actionstring=="preview_report") a=4;
-                    else
-                    if (actionstring=="print_report") a=5;
-                        else
-                        if (actionstring=="goto_firstrow") a=6;
-                            else
-                            if (actionstring=="goto_lastrow") a=7;
-                                else
-                                if (actionstring=="goto_nextrow") a=8;
-                                    else
-                                    if (actionstring=="goto_previousrow") a=9;
-                                        else
-                                        if (actionstring=="insert_row") a=10;
-                                            else
-                                            if (actionstring=="delete_row") a=11;
-                                                else
-                                                if (actionstring=="store_row") a=12;
-                                                    else
-                                                    if (actionstring=="action_query") a=13;
-						    else
-						    if (actionstring=="close_application") a=14;
-						    else
-						    if (actionstring=="open_view") a=15;
-
-  set_action(a,objectname,showmaximized,registerchange);
-
+    long int a = ID_ACTION_NONE;
+    int i = ID_FORM_OPEN;
+    
+    do {
+		if (actionstring==actionItems[i])
+		    a = i;
+	} while (a == ID_ACTION_NONE && ++i < ID_LAST);
+ 
+    set_action(a,objectname,showmaximized,registerchange);
 }
 
 

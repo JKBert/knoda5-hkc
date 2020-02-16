@@ -1,3 +1,7 @@
+February 2020 - Patrik Hanak <knoda4-admins@lists.sourceforge.net>
+    o V 0.8.4r1
+        o fixed #1 view not opened for "open_view" action in hk_button
+
 February 05 2016 - Patrik Hanak <knoda4-admins@lists.sourceforge.net>
     o V 0.8.4
         o fix compilation errors, see patch file hk_classes_083to084.patch

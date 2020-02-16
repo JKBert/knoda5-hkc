@@ -66,7 +66,7 @@
 /* #undef NO_IOSTREAM */
 
 /* DEFINES THE NAME OF THE ODBC LIBRARY */
-#define ODBCLIBRARY "odbc"
+/* #undef ODBCLIBRARY */
 
 /* Name of package */
 #define PACKAGE "hk_classes"
@@ -87,10 +87,10 @@
 #define PACKAGE_VERSION ""
 
 /* pxlib build date */
-#define PXLIB_BUILD_DATE "2006-12-17"
+#define PXLIB_BUILD_DATE "2020-02-16"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "0.8.3"
+#define VERSION "0.8.4"
