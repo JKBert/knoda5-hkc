@@ -66,7 +66,7 @@
 /* #undef NO_IOSTREAM */
 
 /* DEFINES THE NAME OF THE ODBC LIBRARY */
-/* #undef ODBCLIBRARY */
+#define ODBCLIBRARY "odbc"
 
 /* Name of package */
 #define PACKAGE "hk_classes"
