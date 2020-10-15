@@ -3,7 +3,7 @@ INCLUDES=   -I../hk_classes -I@POSTGRESINCDIR@
 
 AM_CXXFLAGS= -Wall -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings -I@XMLINCLUDE@ @BITARCHITECTURE@
 
-libhk_postgresdriver_la_LDFLAGS = -version-info 0:1:0 -L@POSTGRESLIBDIR@
+libhk_postgresdriver_la_LDFLAGS = -version-info 0:2:0 -L@POSTGRESLIBDIR@
 libhk_postgresdriver_la_LIBADD = -lpq ../hk_classes/libhk_classes.la
 
 lib_LTLIBRARIES =libhk_postgresdriver.la

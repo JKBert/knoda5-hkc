@@ -1,6 +1,7 @@
 // ****************************************************************************
 // copyright (c) 2000-2005 Horst Knorr <hk_classes@knoda.org>
 // edited by Anirban Biswas <utpal@cal2.vsnl.net.in>
+// copyright (c) 2020 Patrik Hanak <hanakp@users.sourceforge.net>
 // This file is part of the hk_postgresqlclasses library.
 // This file may be distributed and/or modified under the terms of the
 // GNU Library Public License version 2 as published by the Free Software
@@ -10,6 +11,7 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 // ****************************************************************************
 //$Revision: 1.30 $
+
 #include "hk_postgresqltable.h"
 #include "hk_postgresqldatabase.h"
 #include "hk_postgresqlcolumn.h"
@@ -532,14 +534,13 @@ bool hk_postgresqltable::driver_specific_create_columns(void)
     bool result=hk_postgresqldatasource::driver_specific_create_columns();
 
     if (!result||!p_columns||name().size()==0)return false;
-    hk_string s= "SELECT a.*,typname,adsrc as defaultvalue from pg_class t,pg_type y , pg_attribute a \
+    hk_string s= "SELECT a.*,typname, pg_get_expr(d.adbin, d.adrelid) as defaultvalue from pg_class t,pg_type y , pg_attribute a \
    LEFT JOIN pg_attrdef d ON a.attnum=d.adnum and a.attrelid=d.adrelid WHERE  t.oid=a.attrelid \
    and a.attnum>0 and y.oid = a.atttypid and relname='"+name()+"'";
     if (p_tempdatasource==NULL) return false;
     p_tempdatasource->disable();
     p_tempdatasource->set_sql(s);
     p_tempdatasource->enable();
-//  p_tempdatasource->dump_data();
     hk_column* namefield=p_tempdatasource->column_by_name("attname");
     hk_column* isnotnullfield=p_tempdatasource->column_by_name("attnotnull");
     hk_column* defaultfield=p_tempdatasource->column_by_name("defaultvalue");
@@ -560,9 +561,8 @@ bool hk_postgresqltable::driver_specific_create_columns(void)
                 col->set_columntype(hk_column::auto_inccolumn);
                 col->p_autoincdefault=defaultfield->asstring();
                 col->p_autoincdefault.replace(pos,n.size()-1,"currval");
-		p_primary_key_used=true;
-		col->set_primary(true);
-
+                p_primary_key_used=true;
+                col->set_primary(true);
             }
             if (col->columntype()==hk_column::textcolumn)col->set_size(localestring2int(sizefield->asstring())-VARHDRSZ);
             col->set_definitionmode(false);
@@ -578,7 +578,6 @@ bool hk_postgresqltable::driver_specific_create_columns(void)
     if (!p_tempdatasource) return result;
 
     z=0;
-//     hk_column* keyname=p_tempdatasource->column_by_name("indexname");
     hk_column* fieldname=p_tempdatasource->column_by_name("columnname");
     hk_column* primaryfield=p_tempdatasource->column_by_name("is_primary");
     while (  (z <p_tempdatasource->max_rows() ) )
@@ -599,11 +598,7 @@ bool hk_postgresqltable::driver_specific_create_columns(void)
     };                                            //end while
     p_tempdatasource->disable();
 
-
-
-
     return result;
-
 }
 
 
@@ -611,15 +606,13 @@ void hk_postgresqltable::driver_specific_after_copy_table()
 {
     if (p_tempdatasource==NULL) return;
     p_tempdatasource->disable();
-    hk_string s= "SELECT a.*,typname,adsrc as defaultvalue from pg_class t,pg_type y , pg_attribute a \
+    hk_string s= "SELECT a.*,typname, pg_get_expr(d.adbin, d.adrelid) as defaultvalue from pg_class t,pg_type y , pg_attribute a \
    LEFT JOIN pg_attrdef d ON a.attnum=d.adnum and a.attrelid=d.adrelid WHERE  t.oid=a.attrelid \
    and a.attnum>0 and y.oid = a.atttypid and relname='"+name()+"'";
     p_tempdatasource->set_sql(s);
     p_tempdatasource->enable();
     hk_column* namefield=p_tempdatasource->column_by_name("attname");
-//     hk_column* isnotnullfield=p_tempdatasource->column_by_name("attnotnull");
     hk_column* defaultfield=p_tempdatasource->column_by_name("defaultvalue");
-//     hk_column* sizefield=p_tempdatasource->column_by_name("atttypmod");
     unsigned long z=0;
     while (  (z <p_tempdatasource->max_rows() ) )
     {
@@ -632,24 +625,21 @@ void hk_postgresqltable::driver_specific_after_copy_table()
             if(pos!=hk_string::npos)
             {
                 cerr <<defaultfield->asstring()<<endl;
-		hk_string setval=defaultfield->asstring();
+                hk_string setval=defaultfield->asstring();
                 setval.replace(pos,n.size()-1,"SELECT setval");
-		pos=setval.find_last_of(")");
-		hk_string max=",(SELECT max(\""+namefield->asstring()+"\") FROM \""+name()+"\"))";
+                pos=setval.find_last_of(")");
+                hk_string max=",(SELECT max(\""+namefield->asstring()+"\") FROM \""+name()+"\"))";
                 setval.replace(pos,n.size()-1,max);
                 hk_actionquery* query= p_database->new_actionquery();
                 query->set_sql(setval.c_str(),setval.size());
                 query->execute();
                 delete query;
-
-
-	    }
+            }
         }
         p_tempdatasource->goto_next();z++;
     };                                            //end while
 
     p_tempdatasource->disable();
-
 }
 
 

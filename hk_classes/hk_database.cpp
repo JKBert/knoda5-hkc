@@ -1,5 +1,6 @@
 // ****************************************************************************
 // copyright (c) 2000-2005 Horst Knorr <hk_classes@knoda.org>
+// copyright (c) 2020 Patrik Hanak <hanakp@users.sourceforge.net>
 // This file is part of the hk_classes library.
 // This file may be distributed and/or modified under the terms of the
 // GNU Library Public License version 2 as published by the Free Software
@@ -354,7 +355,8 @@ bool hk_database::select_db(const hk_string& newname)
 #ifdef HK_DEBUG
     hkdebug("hk_database::select_db");
 #endif
- if (in_presentationload()) return false;
+    if (in_presentationload())
+      return false;
     hk_string oldname=name();
     clear_presentationlist();
     clear_visiblelist();
@@ -363,62 +365,62 @@ bool hk_database::select_db(const hk_string& newname)
     {
         p_private->p_dbname=newname;
 	
-	if (p_connection->server_needs(hk_connection::NEEDS_DIRECTORY_AS_DATABASE))
-	p_url=newname;//+"/";
-	else
-	p_url=newname;
+	    if (p_connection->server_needs(hk_connection::NEEDS_DIRECTORY_AS_DATABASE))
+	        p_url=newname;//+"/";
+	    else
+	        p_url=newname;
         bool erg= driver_specific_select_db();
         if (erg)
         {
             if (p_connection->server_supports(hk_connection::SUPPORTS_LOCAL_FILEFORMAT)&&
-	    p_url.is_valid() && p_url.directory().size() >0)
-	    {
-	      //cerr <<"directory=#"<<p_url.directory()<<"#"<<endl;
-	      //cerr <<"local file name"<<endl;
-	    p_private->p_databasepath=p_connection->databasepath();
-            p_private->p_databasepath+="/";
-            p_private->p_databasepath+=replace_all("/",replace_all(".",p_url.url(),"_."),"_");
-	    p_private->p_dbname=p_url.url();
-	    //cerr <<"p_dbname="<<p_private->p_dbname<<endl;
-	    //cerr <<"p_databasepath="<<p_private->p_databasepath<<endl;
-	    }
-	    else
-	    {
-	    p_private->p_databasepath=p_connection->databasepath();
-            p_private->p_databasepath+="/";
-            p_private->p_databasepath+=name();
-	    }
+	           p_url.is_valid() && p_url.directory().size() >0)
+	        {
+	            //cerr <<"directory=#"<<p_url.directory()<<"#"<<endl;
+	            //cerr <<"local file name"<<endl;
+                p_private->p_databasepath=p_connection->databasepath();
+                p_private->p_databasepath+="/";
+                p_private->p_databasepath+=replace_all("/",replace_all(".",p_url.url(),"_."),"_");
+	            p_private->p_dbname=p_url.url();
+	           //cerr <<"p_dbname="<<p_private->p_dbname<<endl;
+	           //cerr <<"p_databasepath="<<p_private->p_databasepath<<endl;
+	        }
+	        else
+	        {
+	            p_private->p_databasepath=p_connection->databasepath();
+                p_private->p_databasepath+="/";
+                p_private->p_databasepath+=name();
+	        }
             mkdir (p_private->p_databasepath.c_str(),S_IRUSR|S_IWUSR|S_IXUSR);
             hk_string b=p_private->p_databasepath+"/output";
             mkdir (b.c_str(),S_IRUSR|S_IWUSR|S_IXUSR);
-	    if (has_centralstoragetable())
-	    {
-	     for (int f=ft_query;f<=ft_module;++f)
-	      {
-		    if (f!=ft_view)
-		    {
-		    p_private->p_storagemode[f]=hk_database::central;
-		    p_private->p_loadmode[f]=hk_database::central;
-		    }
-	      }
+	        if (has_centralstoragetable())
+	        {
+	            for (int f=ft_query;f<=ft_module;++f)
+	            {
+		            if (f!=ft_view)
+		            {
+		                p_private->p_storagemode[f]=hk_database::central;
+		                p_private->p_loadmode[f]=hk_database::central;
+		            }
+	            }
 
-	    }
-	    else
-	    {
-	     for (int f=ft_query;f<=ft_referentialintegrity;++f)
-	      {
-		    p_private->p_storagemode[f]=hk_database::local;
-		    p_private->p_loadmode[f]=hk_database::local;
-	      }
-	    }
-	    load_configuration();
+	        }
+	        else
+	        {
+	            for (int f=ft_query;f<=ft_referentialintegrity;++f)
+	            {
+		            p_private->p_storagemode[f]=hk_database::local;
+		            p_private->p_loadmode[f]=hk_database::local;
+	            }
+	        }
+	        load_configuration();
 
         }
         else
-	{
-          p_private->p_dbname=oldname;
-          show_warningmessage(replace_all("%1",hk_translate("No such Database '%1'!"),newname));
-	}
+	    {
+            p_private->p_dbname=oldname;
+            show_warningmessage(replace_all("%1",hk_translate("No such Database '%1'!"),newname));
+	    }
         return erg;
     }
     else
@@ -427,7 +429,6 @@ bool hk_database::select_db(const hk_string& newname)
         show_warningmessage(hk_translate("Not connected to server!"));
         return false;
     }
-
 }
 
 
@@ -2061,8 +2062,6 @@ void hk_database::load_configuration(void)
 
 
 }
-
-
 
 void hk_database::save_configuration(void)
 {

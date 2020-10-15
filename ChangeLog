@@ -1,3 +1,7 @@
+October 16 2020 - Patrik Hanak <knoda4-admins@lists.sourceforge.net>
+    o V 0.8.4r2
+        o fixed #2 postgresql driver - hk_column::is_notnull() returns incorrect value 
+
 April 21 2020 - Patrik Hanak <knoda4-admins@lists.sourceforge.net>
     o V 0.8.4r1
         o fixed #1 view not opened for "open_view" action in hk_button

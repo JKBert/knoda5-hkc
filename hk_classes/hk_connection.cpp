@@ -1,5 +1,6 @@
 // ****************************************************************************
 // copyright (c) 2000-2005 Horst Knorr <hk_classes@knoda.org>
+// copyright (c) 2020 Patrik Hanak <hanakp@users.sourceforge.net>
 // This file is part of the hk_classes library.
 // This file may be distributed and/or modified under the terms of the
 // GNU Library Public License version 2 as published by the Free Software
@@ -86,7 +87,7 @@ hk_connection::hk_connection(hk_drivermanager* c)
     srand(time(NULL));
     char* h= getenv("HOME");
     p_private->p_classespath=(h==NULL?"/tmp":h);
-    p_private->p_classespath +="/.hk_classes";
+    (p_private->p_classespath).append("/").append(HKCCONFIGDIR);
     p_private->p_databasepath=p_private->p_classespath+"/";p_private->p_databasepath+=p_private->p_host.size()>0?p_private->p_host:"localhost";
     p_drivermanager=c;
     p_private->p_booleanemulation=true;
@@ -145,8 +146,9 @@ hk_string hk_connection::user(void)
 void hk_connection::set_host(const hk_string& h)
 {
     p_private->p_host=h;
-        p_private->p_databasepath=p_private->p_classespath+"/";p_private->p_databasepath+=p_private->p_host.size()>0?p_private->p_host:"localhost";
-        mkdir (p_private->p_databasepath.c_str(),S_IRUSR|S_IWUSR|S_IXUSR);
+    p_private->p_databasepath=p_private->p_classespath+"/";
+    p_private->p_databasepath+=p_private->p_host.size()>0?p_private->p_host:"localhost";
+    mkdir (p_private->p_databasepath.c_str(),S_IRUSR|S_IWUSR|S_IXUSR);
 
 }
 
@@ -390,7 +392,8 @@ hk_database* hk_connection::new_database(const hk_string& name)
 void hk_connection::make_databasedir(const hk_string& dbname)
 {
     if (dbname.size()==0)return ;
-    hk_string p=p_private->p_databasepath+"/"; p+=dbname;
+    hk_string p=p_private->p_databasepath+"/"; 
+    p+=dbname;
     mkdir (p.c_str(),S_IRUSR|S_IWUSR|S_IXUSR);
 
 }
@@ -599,7 +602,8 @@ void hk_connection::load_configuration(void)
 void hk_connection::set_classespath(hk_string& p)
 {
     p_private->p_classespath=p;
-    p_private->p_databasepath=p+"/";p_private->p_databasepath+=p_private->p_host.size()>0?p_private->p_host:"localhost";
+    p_private->p_databasepath = p + "/"; 
+    p_private->p_databasepath += p_private->p_host.size()>0?p_private->p_host:"localhost";
     mkdir (p_private->p_databasepath.c_str(),S_IRUSR|S_IWUSR|S_IXUSR);
     load_configuration();
 }

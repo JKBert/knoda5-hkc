@@ -1,4 +1,5 @@
 /* config.h.in.  Generated from configure.in by autoheader.  */
+/* manually extended by CONFIGDIR option */
 
 /* Defines whether argp.h exists */
 #undef HAVE_ARGP
@@ -93,3 +94,13 @@
 
 /* Version number of package */
 #undef VERSION
+
+/* Define user config directory - default or customized */
+#ifndef CONFIGDIR
+#  define HKCCONFIGDIR ".hk_classes"
+#else
+#  define Q(x) #x
+#  define QUOTE(x) Q(x)
+#  define HKCCONFIGDIR QUOTE(CONFIGDIR)
+#endif
+

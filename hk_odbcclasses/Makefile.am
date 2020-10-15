@@ -2,7 +2,7 @@ libdir=@HK_CLASSESDIR@/drivers
 INCLUDES= -I../hk_classes -I@ODBCINCDIR@ 
 AM_CXXFLAGS= -Wall -W -Wconversion -Wshadow -Wcast-qual -Wwrite-strings -I@XMLINCLUDE@ @BITARCHITECTURE@
 
-libhk_odbcdriver_la_LDFLAGS = -version-info 0:0:0 -L@ODBCLIBDIR@
+libhk_odbcdriver_la_LDFLAGS = -version-info 0:1:0 -L@ODBCLIBDIR@
 libhk_odbcdriver_la_LIBADD = -l@ODBCLIBRARY@ ../hk_classes/libhk_classes.la
 
 lib_LTLIBRARIES = 	libhk_odbcdriver.la

@@ -1,5 +1,6 @@
 // ****************************************************************************
 // copyright (c) 2000-2005 Horst Knorr <hk_classes@knoda.org>  
+// copyright (c) 2020 Patrik Hanak <hanakp@users.sourceforge.net>
 // This file is part of the hk_odbcclasses library.
 // This file may be distributed and/or modified under the terms of the
 // GNU Library Public License version 2 as published by the Free Software
@@ -565,7 +566,7 @@ bool hk_odbctable::driver_specific_create_columns(void)
 
     if (p_odbcdatabase->connection()->backendtype()==hk_odbcconnection::postgresql)
     {
-        hk_string s= "SELECT a.*,typname,adsrc as defaultvalue from pg_class t,pg_type y , pg_attribute a \
+        hk_string s= "SELECT a.*,typname, pg_get_expr(d.adbin, d.adrelid) as defaultvalue from pg_class t,pg_type y , pg_attribute a \
    LEFT JOIN pg_attrdef d ON a.attnum=d.adnum and a.attrelid=d.adrelid WHERE  t.oid=a.attrelid \
    and a.attnum>0 and y.oid = a.atttypid and relname='"+name()+"'";
         hk_datasource* p_tempdatasource=database()->new_resultquery();

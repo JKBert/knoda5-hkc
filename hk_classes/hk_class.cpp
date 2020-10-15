@@ -1,5 +1,6 @@
 // ****************************************************************************
 // copyright (c) 2000-2005 Horst Knorr <hk_classes@knoda.org>
+// copyright (c) 2020 Patrik Hanak <hanakp@users.sourceforge.net>
 // This file is part of the hk_classes library.
 // This file may be distributed and/or modified under the terms of the
 // GNU Library Public License version 2 as published by the Free Software
@@ -547,7 +548,7 @@ void hk_class::save_preferences(void)
     char* h= getenv("HOME");
     hk_string  p_classespath=(h==NULL?"/tmp":h);
 
-    p_classespath +="/.hk_classes";
+    p_classespath.append("/").append(HKCCONFIGDIR);
     mkdir (p_classespath.c_str(),S_IRUSR|S_IWUSR|S_IXUSR);
     hk_string p_filename =p_classespath+"/preferences";
     ofstream* s= new ofstream(p_filename.c_str());
