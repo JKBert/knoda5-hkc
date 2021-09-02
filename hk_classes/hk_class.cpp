@@ -598,7 +598,8 @@ bool hk_class::runtime_only(void)
 
 void hk_class::set_levelspace(ostream& stream)
 {
-    if (stream==NULL) return;
+    //JKB if (stream==NULL) return;
+    if (!stream) return;
 
     unsigned int l=p_taglevel;
 

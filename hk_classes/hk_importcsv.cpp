@@ -171,7 +171,9 @@ void hk_importcsv::get_line(ifstream&s ,hk_string& b)
    b="";
    while (noreturn)
    {
-     void* r=s.get(c);
+     // JKB void* r=s.get(c);
+     istream& r=s.get(c);
+
      hk_string buf(1,c);
      if (buf==p_textdelimiter)
       {
@@ -183,7 +185,8 @@ void hk_importcsv::get_line(ifstream&s ,hk_string& b)
         if (!inbrackets) noreturn=false;
       }
 
-     if (r==0) noreturn=false;
+// JKB if (r==0) noreturn=false;
+     if (!r) noreturn=false;
      if (noreturn)   b=b+c;
 
 

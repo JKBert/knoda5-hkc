@@ -21076,8 +21076,8 @@ CPPFLAGS="$ac_save_CPPFLAGS "
 
 echo "$as_me:$LINENO: checking whether FREETYPE is available" >&5
 echo $ECHO_N "checking whether FREETYPE is available... $ECHO_C" >&6
-   FREETYPEINC=`freetype-config --cflags`
-   FREETYPELIB=`freetype-config --libs`
+   FREETYPEINC=`pkg-config freetype2 --cflags`
+   FREETYPELIB=`pkg-config freetype2 --libs`
 
 
 ac_save_LIBS="$LIBS"

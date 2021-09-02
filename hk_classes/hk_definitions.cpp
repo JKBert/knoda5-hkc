@@ -214,5 +214,6 @@ bool result=true;
 bool file_exists(const hk_string& filename)
 {
  ifstream ifs(filename.c_str(),ios::in);
- return ifs;
+// JKB
+ return !(!ifs);
 }
