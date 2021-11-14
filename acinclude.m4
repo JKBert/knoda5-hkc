@@ -1069,8 +1069,8 @@ CPPFLAGS="$ac_save_CPPFLAGS "
 AC_DEFUN([HK_CHECK_FREETYPE],
 [
 AC_MSG_CHECKING([whether FREETYPE is available])
-   FREETYPEINC=`freetype-config --cflags`
-   FREETYPELIB=`freetype-config --libs`
+   FREETYPEINC=`pkg-config freetype2 --cflags`
+   FREETYPELIB=`pkg-config freetype2 --libs`
 
 
 ac_save_LIBS="$LIBS"
