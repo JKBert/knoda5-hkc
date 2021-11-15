@@ -3,7 +3,7 @@ AC_INIT(NEWS)
 dnl AC_PREFIX_DEFAULT(/usr/local/hk_classes)
 AC_PROG_INSTALL
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE(hk_classes,0.8.3)
+AM_INIT_AUTOMAKE(hk_classes,0.8.5)
 AM_MAINTAINER_MODE
 
 
@@ -101,6 +101,8 @@ AC_IOSTREAM_EXISTS
 HK_CLEARENV_EXISTS
 HK_CHECK_ARGP_EXISTS
 
+SRCDIR=$srcdir
+AC_SUBST(SRCDIR)
 
 AC_OUTPUT(Makefile hk_classes/Makefile hk_dbaseclasses/Makefile hk_firebirdclasses/Makefile hk_mysqlclasses/Makefile \
           hk_postgresclasses/Makefile hk_odbcclasses/Makefile \

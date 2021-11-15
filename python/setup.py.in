@@ -39,7 +39,7 @@ class uninstall(Command):
 hk_classesmodule= Extension('_hk_classes',
 						define_macros = [ ('MAJOR_VERSION','1'),
 									    ('MINOR_VERSION','0')],
-						include_dirs= ['../hk_classes' , '@XMLINCLUDE@'],
+						include_dirs= ['../hk_classes' , '../@SRCDIR@/hk_classes', '@XMLINCLUDE@'],
 						libraries = ['hk_classes'],
 						library_dirs = ['../hk_classes/.libs'],
 						runtime_library_dirs = ['@HK_CLASSESDIR@'],

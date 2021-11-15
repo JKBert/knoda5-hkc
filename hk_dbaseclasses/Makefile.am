@@ -1,5 +1,5 @@
 libdir=@HK_CLASSESDIR@/drivers
-INCLUDES= -I../hk_classes 
+INCLUDES= -I$(top_srcdir)/hk_classes 
 
 AM_CPPFLAGS=
 
